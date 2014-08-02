@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="post">
+{{ content }}
+</div>
+
+<div class="related-posts">
+<aside id="sidebar">
+  <h2>Related Posts</h2>
+  <ul>
+    {% for post in site.related_posts limit:3 %}
+      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</aside>
+</div>
+
