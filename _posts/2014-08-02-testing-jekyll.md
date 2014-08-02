@@ -23,12 +23,12 @@ I can't really remember how `markdown` works.
 - Else
 
 
-```c
+{% highlight c %}
 #include <cstdio>
 
 int main() {
    printf("Hello world");
 }
-```
+{% endhighlight %}
 
 I'm not even sure if that would compile...
