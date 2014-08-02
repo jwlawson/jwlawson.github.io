@@ -2,35 +2,37 @@
 <html>
 
 <head>
-    <title>{{ page.title }}</title>
+  <title>{{ page.title }}</title>
 
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter">
-    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter">
+  <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/print.css" media="print">
 </head>
 
 <body>
 <div class="site">
-    <header>
-        <div class="inner">
-        Header
-        </div>
-    </header>
-
-    <div id="content-wrapper">
-    <div class="inner clearfix">
-    <section id="main-content">
-
-    {{ content }}
-
-    </section>
+  <header>
+    <div class="inner">
+      <h1>{{ page.title }}</h1>
     </div>
-    </div>
+  </header>
 
-    <div class="footer">
+  <div id="content-wrapper">
+  <div class="inner clearfix">
+  <section id="main-content">
+
+  {{ content }}
+
+  </section>
+
+  <div class="footer">
     Footer
-    </div>
+  </div>
+
+  </div>
+  </div>
+
 </div>
 
 </body>
