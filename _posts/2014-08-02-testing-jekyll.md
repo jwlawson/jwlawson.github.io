@@ -3,7 +3,7 @@ layout: post
 title: Testing Jekyll
 ---
 
-#{{ post.title }}
+# {{ page.title }}
 
 I'm trying to see if Jekyll works. Or rather how it works - I'm sure it does work.
 
@@ -14,16 +14,15 @@ I'm trying to see if Jekyll works. Or rather how it works - I'm sure it does wor
 Sometimes I don't really know what I'm doing.
 I can't really remember how `markdown` works.
 
-[ ]Make list
-[*]Do things
+1. Make list
+2. Do things
 
--Or
--Something
--Else
+- Or
+- Something
+- Else
 
-I forget how to do numbered lists.
 
-```
+```c
 #include <cstdio>
 
 int main() {
