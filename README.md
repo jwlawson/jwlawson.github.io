@@ -11,11 +11,11 @@ of what I am working on at the time being.
 
 ### TODO
 
-* Ludum dare games
-* Quiver computations
-* General overview
-* Maths work
-* Other github projects?
+- [ ] Ludum dare games
+- [ ] Quiver computations
+- [ ] General overview
+- [ ] Maths work
+- [ ] Other github projects?
 
 ### License
 
