@@ -11,6 +11,7 @@ of what I am working on at the time being.
 
 ### TODO
 
+- [ ] Fix print css
 - [ ] Ludum dare games
 - [ ] Quiver computations
 - [ ] General overview
