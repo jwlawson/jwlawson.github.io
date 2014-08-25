@@ -7,8 +7,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
@@ -19,7 +19,7 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
@@ -43,11 +43,10 @@ table {
 }
 body {
   font-size: 13px;
-  line-height: 1.5; 
+  line-height: 1.5;
   font-family: 'Helvetica Neue', Helvetica, Arial, serif;
   color: #000;
 }
-
 a {
   color: #2879d0;
   font-weight: bold;
@@ -57,18 +56,16 @@ header {
   padding-top: 35px;
   padding-bottom: 10px;
 }
-
 header h1 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-weight: bold;
   letter-spacing: -1px;
   font-size: 48px;
   color: #2879d0;
   line-height: 1.2;
 }
-
 header h2 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif; 
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   letter-spacing: -1px;
   font-size: 24px;
   color: #2879d0;
@@ -98,7 +95,6 @@ code, pre {
 code {
   padding: 0 3px;
 }
-
 pre {
   border: solid 1px #f2f2f2;
   padding: 20px;
@@ -107,76 +103,104 @@ pre {
 pre code {
   padding: 0;
 }
-
 ul, ol, dl {
   margin-bottom: 20px;
 }
-
-
-/* COMMON STYLES */
 
 table {
   width: 100%;
   border: 1px solid #ebebeb;
 }
-
 th {
   font-weight: 500;
 }
-
 td {
   border: 1px solid #ebebeb;
-  text-align: center; 
+  text-align: center;
   font-weight: 300;
 }
-
 form {
   background: #f2f2f2;
   padding: 20px;
 }
 
-
-/* GENERAL ELEMENT TYPE STYLES */
-
-h1 {
+#main-content h1 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
+  letter-spacing: -1px;
   font-size: 2.8em;
-} 
+}
+#main-content h1:before {
+  content: "/";
+  color: #9ddcff;
+  padding-right: 0.3em;
+  margin-left: -0.9em;
+}
 
-h2 {
+#main-content h2 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 22px;
   font-weight: bold;
   color: #303030;
   margin-bottom: 8px;
-} 
-
-h3 {
+}
+#main-content h2:before {
+  content: "//";
+  color: #9ddcff;
+  padding-right: 0.3em;
+  margin-left: -1.5em;
+}
+#main-content h3 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   color: #303030;
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 8px;
-} 
- 
-h4 {
+}
+#main-content h3:before {
+  content: "///";
+  color: #9ddcff;
+  padding-right: 0.3em;
+  margin-left: -2em;
+}
+#main-content h4 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 16px;
   color: #303030;
   font-weight: bold;
-} 
-
-h5 {
+}
+#main-content h4:before {
+  content: "////";
+  color: #9ddcff;
+  padding-right: 0.3em;
+  margin-left: -2.8em;
+}
+#main-content h5 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 1em;
   color: #303030;
-} 
-
-h6 {
+}
+#main-content h5:before {
+  content: "/////";
+  color: #9ddcff;
+  padding-right: 0.3em;
+  margin-left: -3.2em;
+}
+#main-content h6 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: .8em;
   color: #303030;
-} 
-
+}
+#main-content h6:before {
+  content: "//////";
+  color: #9ddcff;
+  padding-right: 0.3em;
+  margin-left: -3.7em;
+}
 p {
   font-weight: 300;
   margin-bottom: 20px;
 }
- 
+
 a {
   text-decoration: none;
 }
@@ -214,7 +238,6 @@ footer {
   font-size: 13px;
   color: #aaa;
 }
-
 footer a {
   color: #666;
 }
@@ -227,7 +250,6 @@ footer a {
   visibility: hidden;
   height: 0;
 }
-
 .clearfix {display: inline-block;}
 * html .clearfix {height: 1%;}
 .clearfix {display: block;}
