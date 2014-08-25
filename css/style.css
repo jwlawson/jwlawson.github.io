@@ -85,7 +85,7 @@ header a {
 }
 
 header a:hover {
-	color: #eed;
+	color: #bbddff;
 }
 
 header h2 {
@@ -232,7 +232,6 @@ td {
 form {
   background: #f2f2f2;
   padding: 20px;
-  
 }
 
 ul.postlist span {
