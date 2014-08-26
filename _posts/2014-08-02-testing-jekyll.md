@@ -1,10 +1,7 @@
 ---
 layout: post
 title: Testing Jekyll
-excerpt: Test page to see whether Jekyll works as I think it does
 ---
-
-# {{ page.title }}
 
 I'm trying to see if Jekyll works. Or rather how it works - I'm sure it does work.
 
