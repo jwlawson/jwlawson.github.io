@@ -3,9 +3,7 @@ layout: main
 title: John Lawson
 ---
 
-<div id="home">
-
-<ul class="postlist">
+<ul id="postlist">
   {% for post in site.posts %}
     <li>
       <a href="{{ post.url }}">{{ post.title }}</a> &#8212; <span>{{ post.date | date: "%-d %B %Y" }}</span>
@@ -13,7 +11,5 @@ title: John Lawson
     </li>
   {% endfor %}
 </ul>
-
-</div>
 
 
