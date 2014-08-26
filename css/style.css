@@ -226,7 +226,23 @@ form {
   background: #f2f2f2;
   padding: 20px;
 }
-ul.postlist span {
+ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+ol {
+  list-style: decimal inside;
+  padding-left: 3px;
+}
+dl dd {
+  font-style: italic;
+  font-weight: 100;
+}
+ul#postlist {
+  list-style: disc inside;
+  padding-left: 20px;
+}
+ul#postlist span {
 	font-size: 75%;
 }
 
@@ -323,20 +339,6 @@ blockquote {
   padding: 0 0 0 30px;
 }
 
-ul {
-  list-style: disc inside;
-  padding-left: 20px;
-}
-
-ol {
-  list-style: decimal inside;
-  padding-left: 3px;
-}
-
-dl dd {
-  font-style: italic;
-  font-weight: 100;
-}
 
 footer {
   background: transparent url('../images/hr.png') 0 0 no-repeat;
