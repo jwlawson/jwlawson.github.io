@@ -9,7 +9,7 @@ title: John Lawson
   {% for post in site.posts %}
     <li>
       <a href="{{ post.url }}">{{ post.title }}</a> &#8212; <span>{{ post.date | date: "%-d %B %Y" }}</span>
-      {{ post.excerpt }}
+      <p>{{ post.excerpt }}</p>
     </li>
   {% endfor %}
 </ul>
