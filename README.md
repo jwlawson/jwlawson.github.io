@@ -12,7 +12,7 @@ of what I am working on at the time being.
 ### TODO
 
 - [x] Fix print css
-- [ ] Ludum dare games
+- [x] Ludum dare games
 - [ ] Quiver computations
 - [ ] General overview
 - [ ] Maths work
