@@ -17,7 +17,7 @@ of what I am working on at the time being.
 - [ ] General overview
 - [ ] Maths work
 - [ ] Other github projects?
-- [ ] Upload missing LD games to github
+- [x] Upload missing LD games to github
 
 ### License
 
