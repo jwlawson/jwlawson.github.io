@@ -14,7 +14,7 @@ of what I am working on at the time being.
 - [x] Fix print css
 - [x] Ludum dare games
 - [ ] Quiver computations
-- [ ] General overview
+- [x] General overview
 - [ ] Maths work
 - [ ] Other github projects?
 - [x] Upload missing LD games to github
