@@ -3,14 +3,11 @@ layout: main
 title: John Lawson
 ---
 
-<ul id="postlist">
-  {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a> &#8212; <span>{{ post.date | date: "%-d %B %Y" }}</span>
-      {{ post.excerpt }}
-    </li>
-  {% endfor %}
-</ul>
+This is the personal website of John Lawson.
+
+I am a PhD student working at Durham University, supervised by Pavel Tumarkin 
+and John Parker. The main focus of my research and work is in cluster algbras 
+and the geometric applications of them. 
 
 <div class="triple-col"><!--
  --><div class="column-left">
