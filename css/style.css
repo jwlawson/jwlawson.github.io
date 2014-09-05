@@ -365,12 +365,12 @@ div.triple-col a {
 div.triple-col a:hover {
   color: #2268b2;
 }
-div.triple-col h1:before,
-div.triple-col h2:before,
-div.triple-col h3:before,
-div.triple-col h4:before,
-div.triple-col h5:before,
-div.triple-col h6:before {
+#main-content div.triple-col h1:before,
+#main-content div.triple-col h2:before,
+#main-content div.triple-col h3:before,
+#main-content div.triple-col h4:before,
+#main-content div.triple-col h5:before,
+#main-content div.triple-col h6:before {
   content: none;
   padding-right: 0;
   margin-left: 0;
