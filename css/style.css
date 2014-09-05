@@ -356,21 +356,21 @@ footer a:hover {
   color: #444;
 }
 
-.triple-col {
+div.triple-col {
   text-align: center;
 }
 
-.column-left {
+div.column-left {
   float: left;
-  width: 33%;
+  width: 30%;
 }
-.column-center {
+div.column-center {
   display: inline-block;
-  width: 33%;
+  width: 30%;
 }
-.column-right {
+div.column-right {
   float: right;
-  width: 33%;
+  width: 30%;
 }
 
 /* MISC */
