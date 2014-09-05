@@ -359,7 +359,12 @@ footer a:hover {
 div.triple-col {
   text-align: center;
 }
-
+div.triple-col a {
+  color: #666;
+}
+div.triple-col a:hover {
+  color: #2268b2;
+}
 div.column-left {
   float: left;
   width: 30%;
