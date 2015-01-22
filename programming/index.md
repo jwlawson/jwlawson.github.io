@@ -6,7 +6,7 @@ title: Programming
 ### Quiver computations 
 
 Over 2014 and 2015 I developed a suite of tools to compute the mutations of 
-quivers. See the [main page][qv] for more.
+quivers. See the [quiver page][qv] for more.
 
 The aim of the project was to compute every minimally mutation-infinite quiver, 
 that is each quiver which is mutation-infinite, but every subquiver is 
