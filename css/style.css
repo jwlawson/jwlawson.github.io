@@ -203,11 +203,10 @@ ul, ol, dl {
 }
 hr {
   height: 1px;
-  line-height: 1px;
   margin-top: 1em;
-  padding-bottom: 1em;
+  margin-bottom: 1em;
   border: none;
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
+  background: #aaa;
 }
 table {
   width: 100%;
