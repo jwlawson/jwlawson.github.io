@@ -6,7 +6,7 @@ title: John Lawson
 This is the personal website of John Lawson.
 
 I am a PhD student working at Durham University, supervised by Pavel Tumarkin 
-and John Parker. The main focus of my research and work is in cluster algbras 
+and John Parker. The main focus of my research and work is in cluster algebras 
 and the geometric applications of them. 
 
 <div class="triple-col"><!--

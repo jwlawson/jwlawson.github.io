@@ -245,6 +245,12 @@ ul#postlist {
 ul#postlist span {
 	font-size: 75%;
 }
+ul#travellist {
+  list-style: none;
+}
+ul#travellist span {
+	font-size: 75%;
+}
 
 #main-content h1 {
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
