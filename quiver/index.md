@@ -58,7 +58,7 @@ to pass to `gml2pic`. These are available on the `qvdraw` project page.
 
 
 [libqv]: https://github.com/jwlawson/qv
-[qvtrim]: https:://github.com/jwlawson/qvtrim
+[qvtrim]: https://github.com/jwlawson/qvtrim
 [qvmmi]: https://github.com/jwlawson/qvmmi
 [qvfin]: https://github.com/jwlawson/qvfin
 [qvmove]: https://github.com/jwlawson/qvmove
