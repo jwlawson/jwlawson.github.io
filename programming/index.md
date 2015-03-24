@@ -26,7 +26,7 @@ I have participated in a number of the game creation competitions Ludum Dare.
 
 See the [Ludum Dare page][ludum dare] for more. 
 
-[qv]: {{ site.baseurl }}/quiver
+[qv]: //www.maths.dur.ac.uk/users/j.w.lawson/mmi/
 [nof1]: {{ site.baseurl }}/nof1
 [nof1 github]: //github.com/jwlawson/nof1
 [ludum dare]: {{ site.baseurl }}/ludumdare
