@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html>
-
-{% include head.html %}
-
-<body>
-<div class="site">
-  {% include header.html %}
-  
-  <div id="content-wrapper">
-  <div class="inner clearfix">
-  <section id="main-content">
-    <h1>{{ page.title }}</h1>
-    {{ content }}
-  </section>
-  <aside id="sidebar">
-    {% include links.html %}
-    {% include smallprint.html %}
-  </aside>
-
-  </div>
-  </div>
-
+---
+layout: master
+---
+{% include base.html %}
+<div class="container">
+<div id="content-wrapper" class="row">
+<div class="col-md-9">
+<section id="main-content">
+  <h1>{{ page.title }}</h1>
+  {{ content }}
+</section>
+</div>
+<div class="col-md-3">
+<aside id="sidebar">
+  {% include links.html %}
+  {% include smallprint.html %}
+</aside>
 </div>
 
-</body>
-</html>
+</div>
+</div>

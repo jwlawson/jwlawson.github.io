@@ -7,28 +7,29 @@ This is the personal website of John Lawson.
 
 I am a PhD student working at Durham University, supervised by Pavel Tumarkin 
 and John Parker. The main focus of my research and work is in cluster algebras 
-and the geometric applications of them. 
+and the geometric applications of them.
 
-<div class="triple-col"><!--
- --><div class="column-left">
-    <a href="{{ site.baseurl }}/research">
-    <i class="fa fa-flask fa-4x fa-border"></i>
-    <h3>Research</h3>
-    <p>Discover recent research.</p>
-    </a>
-  </div><!--
- --><div class="column-center">
-    <a href="{{ site.baseurl }}/teaching">
-    <i class="fa fa-university fa-4x fa-border"></i>
-    <h3>Teaching</h3>
-    <p>Resources related to tutorials.</p>
-    </a>
-  </div><!--
- --><div class="column-right">
-    <a href="{{ site.baseurl }}/programming">
-    <i class="fa fa-code fa-4x fa-border"></i>
-    <h3>Programming</h3>
-    <p>Links to recent programming projects.</p>
-    </a>
-  </div><!--
- --></div>
+{% include base.html %}
+<div class="row triple-col">
+<div class="col-xs-4">
+  <a href="{{ base }}/research">
+  <i class="fa fa-flask fa-4x fa-border"></i>
+  <h3>Research</h3>
+  <p>Discover recent research.</p>
+  </a>
+</div>
+<div class="col-xs-4">
+  <a href="{{ base }}/teaching">
+  <i class="fa fa-university fa-4x fa-border"></i>
+  <h3>Teaching</h3>
+  <p>Resources related to tutorials.</p>
+  </a>
+</div>
+<div class="col-xs-4">
+  <a href="{{ base }}/programming">
+  <i class="fa fa-code fa-4x fa-border"></i>
+  <h3>Programming</h3>
+  <p>Links to recent programming projects.</p>
+  </a>
+</div>
+</div>

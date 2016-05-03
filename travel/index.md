@@ -10,6 +10,6 @@ title: Travel
 			<span>{{ post.conf_dates }}</span>
       {{ post.content }}
     </li>
-		<hr></hr>
+		<hr>
   {% endfor %}
 </ul>
