@@ -187,42 +187,39 @@ ul#travellist {
 ul#travellist span {
 	font-size: 75%;
 }
-#main-content h1 {
+#main-content h1,
+#main-content h2,
+#main-content h3,
+#main-content h4,
+#main-content h5,
+#main-content h6 {
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
-  font-size: 2.8em;
-  letter-spacing: -1px;
   color: #474747;
 }
+#main-content h1 {
+  font-size: 2.8em;
+  letter-spacing: -1px;
+}
 #main-content h2 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 8px;
-  color: #474747;
 }
 #main-content h3 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 18px;
   font-weight: bold;
   margin-top: 24px;
   margin-bottom: 8px;
-  color: #474747;
 }
 #main-content h4 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 15px;
   font-weight: bold;
-  color: #474747;
 }
 #main-content h5 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: 14px;
-  color: #474747;
 }
 #main-content h6 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
   font-size: .8em;
-  color: #474747;
 }
 p {
   margin-bottom: 20px;
@@ -240,7 +237,7 @@ blockquote {
   padding: 0 0 0 30px;
 }
 footer {
-  background: transparent url('../images/hr.png') 0 0 no-repeat;
+  background-color: transparent;
   margin-top: 40px;
   padding-top: 20px;
   padding-bottom: 30px;
@@ -289,20 +286,6 @@ div.triple-col a:hover {
 #main-content div.triple-col a:hover h6 {
   color: #2268b2;
 }
-div.column-left {
-  float: left;
-  width: 30%;
-}
-div.column-center {
-  display: inline-block;
-  width: 30%;
-}
-div.column-right {
-  float: right;
-  width: 30%;
-}
-
-/* MISC */
 .clearfix:after {
   clear: both;
   content: '.';
