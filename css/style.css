@@ -286,16 +286,9 @@ div.triple-col a:hover {
 #main-content div.triple-col a:hover h6 {
   color: #2268b2;
 }
-.clearfix:after {
-  clear: both;
-  content: '.';
-  display: block;
-  visibility: hidden;
-  height: 0;
+aside#sidebar li {
+  width: 100%;
 }
-.clearfix {display: inline-block;}
-* html .clearfix {height: 1%;}
-.clearfix {display: block;}
 @media only screen and (min-width: 1200px) {
 #main-content h1:before {
   content: "/";
@@ -401,6 +394,9 @@ div.triple-col a:hover {
   }
   aside#sidebar a.button {
     display: none;
+  }
+  aside#sidebar li {
+    width: auto;
   }
   #main-content h1:before,
   #main-content h2:before,
