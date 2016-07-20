@@ -3,6 +3,10 @@ layout: post
 title: Plotting a referendum - Unemployment
 category: stats
 sub: true
+nex: Mapping the data
+nextfile: 2016-07-19-plotting-a-referendum-map
+prev: Income
+prevfile: 2016-07-19-plotting-a-referendum-income
 ---
 {% include base.html %}
 Following the shock decision by the UK to leave the EU, many ideas were put 
@@ -101,10 +105,10 @@ data.to_pickle('./data/unemployment.pkl')
 
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
-[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-counting-votes %}
+[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
 [Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
 [Capping CAPs]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
-[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-chasing-immigrants %}
+[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
 [Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
 [Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
 [Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}

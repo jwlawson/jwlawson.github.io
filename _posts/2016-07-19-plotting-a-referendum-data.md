@@ -3,6 +3,10 @@ layout: post
 title: Plotting a referendum - Sourcing data
 category: stats
 sub: true
+prev: Overview
+prevfile: 2016-07-19-plotting-a-referendum
+nex: Counting votes
+nextfile: 2016-07-19-plotting-a-referendum-votes
 ---
 {% include base.html %}
 Following the shock decision by the UK to leave the EU, many ideas were put 
@@ -15,10 +19,10 @@ plotting graphs.
 
 * [Overview] 
 * [Sourcing data]
-    * [Handling results]
+    * [Counting votes]
     * [Coding postcodes]
-    * [Capping CAPs]
-    * [Counting immigrants]
+    * [The CAP]
+    * [Immigration]
     * [Income]
     * [Unemployment]
 * [Mapping data]
@@ -29,10 +33,10 @@ plotting graphs.
 
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
-[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-counting-votes %}
+[Counting votes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
 [Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
-[Capping CAPs]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
-[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-chasing-immigrants %}
+[The CAP]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
+[Immigration]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
 [Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
 [Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
 [Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}

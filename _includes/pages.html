@@ -1,0 +1,13 @@
+{% if page.prev or page.nex %}
+{% for post in site.posts %}{% capture file %}{{ post.path | split: '/' | last | split: '.' | first }}{% endcapture %}{% if file == page.nextfile %}{% capture nexturl %}{{ base }}{{ post.url }}{% endcapture %}{% break %}{% endif %}{% endfor %}{% for post in site.posts %}{% capture file %}{{ post.path | split: '/' | last | split: '.' | first }}{% endcapture %}{% if file == page.prevfile %}{% capture prevurl %}{{ base }}{{ post.url }}{% endcapture %}{% break %}{% endif %}{% endfor %}
+<nav>
+  <ul class="pager">
+  {% if page.prev %}
+    <li class="previous"><a href="{{ prevurl }}"><span aria-hidden="true">&larr;</span> {{ page.prev }}</a></li>
+  {% endif %}
+  {% if page.nex %}
+    <li class="next"><a href="{{ nexturl }}">{{ page.nex }} <span aria-hidden="true">&rarr;</span></a></li>
+  {% endif %}
+  </ul>
+</nav>
+{% endif %}

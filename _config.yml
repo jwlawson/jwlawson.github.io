@@ -1,3 +1,6 @@
 name: J Lawson
 url: https://www.jwlawson.co.uk
 markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+highlighter: rouge
