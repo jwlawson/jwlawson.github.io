@@ -86,7 +86,7 @@ Both seem to have different effects on how a region voted in the referendum. Tho
 
 
 
-
+{% include base.html %}
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
 [Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-counting-votes %}
