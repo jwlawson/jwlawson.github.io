@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Plotting a referendum
+title: Plotting a referendum - CAP Spending
 category: stats
+sub: true
 ---
 {% include base.html %}
 Following the shock decision by the UK to leave the EU, many ideas were put 
@@ -12,31 +13,31 @@ In an effort to learn more about data handling in python, using pandas,
 matplotlib and other fun stuff I scoured the internet for data and set about 
 plotting graphs. 
 
-1. [Overview] 
-1. [Sourcing data]
-    1. [Handling results]
-    1. [Coding postcodes]
-    1. [Capping CAPs]
-    1. [Counting immigrants]
-    1. [Income]
-    1. [Unemployment]
-1. [Mapping data]
-1. [Pretending I know stats]
+* [Overview] 
+* [Sourcing data]
+    * [Handling results]
+    * [Coding postcodes]
+    * [Capping CAPs]
+    * [Counting immigrants]
+    * [Income]
+    * [Unemployment]
+* [Mapping data]
+* [Pretending I know stats]
 
 ---
 
 
 
-[Overview]: {% post_url 2016-07-19-plotting-a-referendum %}
-[Sourcing data]: {% post_url 2016-07-19-plotting-a-referendum-data %}
-[Handling results]: {% post_url 2016-07-19-plotting-a-referendum-counting-votes %}
-[Coding postcodes]: {% post_url 2016-07-19-plotting-a-referendum-postcodes %}
-[Capping CAPs]: {% post_url 2016-07-19-plotting-a-referendum-cap %}
-[Counting immigrants]: {% post_url 2016-07-19-plotting-a-referendum-chasing-immigrants %}
-[Income]: {% post_url 2016-07-19-plotting-a-referendum-income %}
-[Unemployment]: {% post_url 2016-07-19-plotting-a-referendum-unemployment %}
-[Mapping data]: {% post_url 2016-07-19-plotting-a-referendum-map %}
-[Pretending I know stats]:  {% post_url 2016-07-19-plotting-a-referendum-stats %}
+[Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
+[Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
+[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-counting-votes %}
+[Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
+[Capping CAPs]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
+[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-chasing-immigrants %}
+[Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
+[Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
+[Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}
+[Pretending I know stats]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
 
 [capmap]: {{ base }}/assets/2016-07-19/cap_96.png "Map showing CAP spend by region"
 [largecapmap]: {{ base }}/assets/2016-07-19/cap_256.png

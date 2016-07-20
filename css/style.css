@@ -112,30 +112,6 @@ aside a.button {
   margin-bottom: 20px;
   font-size: 21px;
 }
-code, pre {
-  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  color: #222;
-  margin-bottom: 30px;
-  font-size: 13px;
-}
-code {
-  background-color: #f2f8fc;
-  border: solid 1px #dbe7f3;
-  padding: 0 3px;
-}
-pre {
-  padding: 20px;
-  background: #fff;
-  text-shadow: none;
-  overflow: auto;
-  border: solid 1px #f2f2f2;
-}
-pre code {
-  color: #2879d0;
-  background-color: #fff;
-  border: none;
-  padding: 0;
-}
 ul, ol, dl {
   margin-bottom: 20px;
 }
@@ -162,20 +138,14 @@ form {
   background: #f2f2f2;
   padding: 20px;
 }
-ul {
-  list-style: disc;
-  padding-left: 20px;
-}
 ol {
   list-style: decimal inside;
-  padding-left: 3px;
 }
 dl dd {
   font-style: italic;
   font-weight: 100;
 }
 ul#postlist {
-  list-style: disc inside;
   padding-left: 20px;
 }
 ul#postlist span {
