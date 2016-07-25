@@ -42,6 +42,17 @@ well as the number of people not born within the UK. The data is provided over
 10 years from 2004 throught to 2016.
 
 {% highlight python %}
+"""
+Pickles the immigration data
+
+Data available at:
+https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/
+	migrationwithintheuk/datasets/localareamigrationindicatorsunitedkingdom
+
+Data is released under the Open Government Licence:
+	http://www.nationalarchives.gov.uk/doc/open-government-licence/
+"""
+
 import pandas as pd
 
 sheets = ['Non-UK Born Population', 'Non-British Population']
@@ -51,38 +62,17 @@ year_cols = ['Percent', 'CI']
 other_cols = ['10 Year Growth', 'Area Name']
 {% endhighlight %}
 
-Pandas provides an ExcelFile object, so that even though we create two
-DataFrames we don't need to go through the process of opening the file twice.
-Using it as a content provider also ensures that it is closed properly once we
-are done.
-
-{% highlight python %}
-def load_data(filename):
-	with pd.ExcelFile(filename) as xls:
-		...
-{% endhighlight %}
-
-The result of `load_data` is a dictionary mapping each entry in `sheets` to a
-DataFrame containing the data from that sheet.
-
-{% highlight python %}
-def load_data(filename):
-	with pd.ExcelFile(filename) as xls:
-		result = {}
-		for s in sheets:
-{% endhighlight %}
-
-This DataFrame is easily read in using the pandas `read_excel` method, and
-`dropna` removes any fully blank rows. The data also includes a number of area
-codes starting `95` which are Irish area codes and so not included in the
-referendum voting. The area codes are strings, so the string method
-`startswith('95')` matches these areas, so the negated call
+The DataFrame for each sheet is easily read in using the pandas `read_excel`
+method, and `dropna` removes any fully blank rows. The data also includes a
+number of area codes starting `95` which are Irish area codes and so not
+included in the referendum voting. The area codes are strings, so the string
+method `startswith('95')` matches these areas, so the negated call
 `df.loc[~df.index.str.startswith('95')]` gives a DataFrame without these rows.
 
-
 {% highlight python %}
-			df = pd.read_excel(xls, s, header=[0, 2]).dropna(how='all')
-			df = df.loc[~df.index.str.startswith('95')]
+def load_sheet(xls, sheet):
+    df = pd.read_excel(xls, sheet, header=[0, 2]).dropna(how='all')
+    df = df.loc[~df.index.str.startswith('95')]
 {% endhighlight %}
 
 The option `header=[0,2]` tells pandas which rows to use as the column indices
@@ -92,12 +82,13 @@ and gives a multi-indexed data frame with a structure like
 |           | Jan 2004 to Dec 2004                                | Jan 2005 to Dec 2005  ... |
 | Area code | Resident Population | Non-British Estimate | CI +/- | Resident Population | ... |
 ```
+
 To simplify things a bit we change the top column headers to just the year.
 
 {% highlight python %}
-			df.columns.set_levels(['Area Name', '2004', '2005', '2006', '2007',
-				'2008', '2009', '2010', '2011', '2012', '2013', '2014'], level=0,
-				inplace=True)
+    df.columns.set_levels(['Area Name'] + years, level=0, inplace=True)
+    df.columns.set_levels(['CI +/-', 'Estimate', 'Population', ''],
+        level=1, inplace=True)
 {% endhighlight %}
 
 The excel file contains colons for non-existant data, which confuses pandas and
@@ -107,8 +98,8 @@ need to perform any computations. To force them to be numeric we apply
 any non-numeric data to `NaN`.
 
 {% highlight python %}
-			for year in years:
-				df[year] = df[year].apply(lambda x: pd.to_numeric(x, errors='coerce'))
+    for year in years:
+        df[year] = df[year].apply(lambda x: pd.to_numeric(x, errors='coerce'))
 {% endhighlight %}
 
 The multi-index needs to be sorted, as otherwise pandas cannot easily perform
@@ -116,9 +107,25 @@ slices on columns. The column axis is always `axis=1`, whereas the default in
 pandas is to normally perform operations like this across the rows (`axis=0`).
 
 {% highlight python %}
-			df.sortlevel(axis=1, inplace=True)
-			result[s] = df
-		return result
+    df.sortlevel(axis=1, inplace=True)
+    return df
+{% endhighlight %}
+
+Pandas provides an ExcelFile object, so that even though we create two
+DataFrames we don't need to go through the process of opening the file twice.
+Using it as a content provider also ensures that it is closed properly once we
+are done.
+
+The result of `load_data` is a dictionary mapping each entry in `sheets` to a
+DataFrame containing the data from that sheet.
+
+{% highlight python %}
+def load_data(filename):
+    with pd.ExcelFile(filename) as xls:
+        result = {}
+        for s in sheets:
+            result[s] = load_sheet(xls, s)
+        return result
 {% endhighlight %}
 
 Now that we have the DataFrames set up we want to extract some useful
@@ -153,8 +160,8 @@ def add_percents(df):
     df['10 Year Growth', 'Val'] = calc_growth(df['2004', 'Percent'],
     	df['2014', 'Percent'])
     df['10 Year Growth', 'CI+'] = ( calc_growth(df['2004', 'Percent'] -
-    	df['2004', 'CI'], df['2014', 'Percent'] +	df['2014', 'CI']) -
-    	df['10 Year Growth', 'Val'] )
+        df['2004', 'CI'], df['2014', 'Percent'] + df['2014', 'CI']) -
+        df['10 Year Growth', 'Val'] )
     df['10 Year Growth', 'CI-'] = ( df['10 Year Growth', 'Val'] -
         calc_growth(df['2004', 'Percent'] + df['2004', 'CI'],
         df['2014', 'Percent'] - df['2014', 'CI']) )
@@ -198,7 +205,7 @@ Load the data into a dictionary `data`.
 {% highlight python %}
 idx = pd.IndexSlice
 
-filename = './data/v12localareamigrationindicatorsaug15_tcm77-414816.xls'
+filename = './raw/v12localareamigrationindicatorsaug15_tcm77-414816.xls'
 data = load_data(filename)
 nuk = data[sheets[0]]
 nbr = data[sheets[1]]
@@ -212,8 +219,9 @@ We also add a third index to the table so that it has the same index as the rest
 of the data.
 
 {% highlight python %}
-population = nuk.loc[idx[:, idx[:, 'Population']]]
-population.columns = pd.MultiIndex.from_tuples([(x, y, '') for x, y in population.columns.values])
+pop = nuk.loc[idx[:, idx[:, 'Population']]]
+index = pd.MultiIndex.from_tuples([(x, y, '') for x, y in pop.columns.values])
+pop.columns = index
 {% endhighlight %}
 
 Now use the functions defined above to add percentages, growth and other data to
@@ -258,17 +266,18 @@ for `Area Name`, so we tidy that up.
 We then need to add the population data back again before saving to a pickle.
 
 {% highlight python %}
-nuk = pd.concat([nuk.loc[idx[:, other_cols]], nuk.loc[idx[:, idx[:, :, year_cols]]]], axis=1)
-nbr = pd.concat([nbr.loc[idx[:, other_cols]], nbr.loc[idx[:, idx[:, :, year_cols]]]], axis=1)
+nuk = pd.concat([nuk.loc[idx[:, other_cols]],
+		nuk.loc[idx[:, idx[:, :, year_cols]]]], axis=1)
+nbr = pd.concat([nbr.loc[idx[:, other_cols]],
+		nbr.loc[idx[:, idx[:, :, year_cols]]]], axis=1)
 cols = nbr.columns.difference(nuk.columns)
 both = pd.merge(nuk, nbr[cols], left_index=True, right_index=True, how='outer')
-both[('Area Name', '')] = both[('Area Name', 'Non-UK Born')]
+both[('Area Name', '', '')] = both[('Area Name', 'Non-UK Born', '')]
 both.sortlevel(axis=1, inplace=True)
 both.drop( [('Area Name', 'Non-UK Born'), ('Area Name', 'Non-British')], axis=1,
     inplace=True)
 
-with_pop = pd.merge(both, population, left_index=True, right_index=True,
-    how='outer')
+with_pop = pd.merge(both, pop, left_index=True, right_index=True, how='outer')
 with_pop.sortlevel(axis=1, inplace=True)
 
 with_pop.to_pickle('./data/immigration.pkl')
