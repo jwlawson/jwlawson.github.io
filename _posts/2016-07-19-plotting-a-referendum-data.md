@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Plotting a referendum - Sourcing data
-category: stats
+category: interest
 sub: true
 prev: Overview
 prevfile: 2016-07-19-plotting-a-referendum
-nex: Counting votes
+nex: Results
 nextfile: 2016-07-19-plotting-a-referendum-votes
 ---
 {% include base.html %}
@@ -19,14 +19,14 @@ plotting graphs.
 
 * [Overview] 
 * [Sourcing data]
-    * [Counting votes]
-    * [Coding postcodes]
+    * [Results]
+    * [Postcodes]
     * [The CAP]
     * [Immigration]
     * [Income]
     * [Unemployment]
 * [Mapping data]
-* [Pretending I know stats]
+* [Scatter plots]
 
 ---
 
@@ -115,13 +115,13 @@ Rename the resulting file `nomis-media-income.csv`.
 
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
-[Counting votes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
-[Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
+[Results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
+[Postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
 [The CAP]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
 [Immigration]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
 [Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
 [Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
 [Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}
-[Pretending I know stats]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
+[Scatter plots]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
 [ons-imm]: https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/localareamigrationindicatorsunitedkingdom
 [ec-res]: http://www.electoralcommission.org.uk/find-information-by-subject/elections-and-referendums/upcoming-elections-and-referendums/eu-referendum/electorate-and-count-information

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Plotting a Referendum - Counting Votes
-category: stats
+category: interest
 sub: true
 nex: Postcodes
 nextfile: 2016-07-19-plotting-a-referendum-postcodes
@@ -19,14 +19,14 @@ plotting graphs.
 
 * [Overview] 
 * [Sourcing data]
-    * [Handling results]
-    * [Coding postcodes]
-    * [Capping CAPs]
-    * [Counting immigrants]
+    * [Results]
+    * [Postcodes]
+    * [The CAP]
+    * [Immigration]
     * [Income]
     * [Unemployment]
 * [Mapping data]
-* [Pretending I know stats]
+* [Scatter plots]
 
 ---
 
@@ -95,11 +95,11 @@ d['Valid_Votes'].sum() * 100`).
 
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
-[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
-[Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
-[Capping CAPs]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
-[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
+[Results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
+[Postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
+[The CAP]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
+[Immigration]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
 [Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
 [Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
 [Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}
-[Pretending I know stats]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
+[Scatter plots]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}

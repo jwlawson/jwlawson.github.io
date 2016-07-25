@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Plotting a referendum - Unemployment
-category: stats
+category: interest
 sub: true
 nex: Mapping the data
 nextfile: 2016-07-19-plotting-a-referendum-map
@@ -19,97 +19,60 @@ plotting graphs.
 
 * [Overview] 
 * [Sourcing data]
-    * [Handling results]
-    * [Coding postcodes]
-    * [Capping CAPs]
-    * [Counting immigrants]
+    * [Results]
+    * [Postcodes]
+    * [The CAP]
+    * [Immigration]
     * [Income]
     * [Unemployment]
 * [Mapping data]
-* [Pretending I know stats]
+* [Scatter plots]
 
 ---
 
-The Office of National Statistics releases unemployment data every month. This
-is provided in an excel spreadsheet which pandas struggles to decode properly.
-As such a lot of the code below is trying to fix the inconsistencies introduced
-by reading the file.
+As with the income data, the unemployment data is downloaded from nomis, and so
+is already close to how we want it. All that is required is removing some rows
+which contain invalid data, as well as renaming the columns, before saving as a
+pickle.
 
-The overall percentage of unemployed people for each reason is not calculated in
-this script, but left till we have the total population of each region (provided
-by the immigration data).
-
-```
+```python
 """
-Pickles the regional unemployment data available from the ONS.
-
 Data available from:
-		https://www.ons.gov.uk/employmentandlabourmarket/peoplenotinwork/
-		unemployment/datasets/claimantcountbyunitaryandlocalauthorityexperimental
-
-Assuming filename is: './data/lmregtabcc01may2016.xls'
-
+    NOMIS website.
+    Dataset: Claimant count -> Claimant count by sex and age
+    Geography: local authorities: district / unitary (as of April 2015)
+    Date: May 2016
+    Age: All (16+)
+    Rates: Claimant count AND Claimants as a proportion of residents aged 16-64
+    Sex: Total
+    Include Area codes
+Assumes resulting filename is: 'nomis-unemployment.csv'
 Data is released under the Open Government Licence:
-	http://www.nationalarchives.gov.uk/doc/open-government-licence/
+        http://www.nationalarchives.gov.uk/doc/open-government-licence/
 """
 
 import pandas as pd
+
+a = pd.read_csv('raw/nomis-unemployment.csv', header=6)
+a.columns = ['Area','Code','Unemployed','Pct_Unemployed']
+a.set_index('Code', inplace=True)
+a = a.dropna()
+a.drop('Column Total', inplace=True)
+a.sort_index(inplace=True)
+
+a.to_pickle('./data/unemployment.pkl')
 ```
 
-Start off by reading the excel file into a pandas DataFrame, then trim off any
-rows which have a null index. Also drop the Scilly Isles (E06000053) as no
-unemployment data is held about that region.
+The whole file is also available as a [gist].
 
-```
-filename = './data/lmregtabcc01may2016.xls'
-data = pd.read_excel(filename, header=[2, 3, 4], na_values=['..'])
-data = data[map(pd.notnull, data.index)]
-data.drop('E06000053', inplace=True)
-```
-
-To make it easier to access data and to help readability, we change the column
-names. After doing so we can drop any columns under 'All', which are read
-incorrectly from the spreadsheet.
-
-```
-data.columns = (
-    data.columns.set_levels(['Unemployment_Count', 'Unemployment_Change_On_Year',
-		    'Area_Name'], level=0)
-    .set_levels(['Number', 'Percentage', 'Percentage', ''], level=1)
-    .set_levels(['Men', 'All', '', 'Women'], level=2)
-)
-data.sortlevel(axis=1, inplace=True)
-data.drop('All', axis=1, level=2, inplace=True)
-```
-
-The values of 'Count'->'Number'->'All' is given by summing up the number of men
-and the number of women, so these columns can be recalculated easily.
-
-For the percentages, we need to know the total population, before the percentage
-of unemployed people can be computed, so we leave that until we combine all the
-data together.
-
-```
-for l0 in ['Unemployment_Count', 'Unemployment_Change_On_Year']:
-    data[(l0, 'Number', 'All')] = data[(l0, 'Number', 'Men')] + data[(l0,
-        'Number', 'Women')]
-data.sortlevel(axis=1, inplace=True)
-```
-
-Finally save the DataFrame to a pickle.
-
-```
-data.to_pickle('./data/unemployment.pkl')
-```
-
-
+[gist]: https://gist.github.com/jwlawson/41302a734c6d9b0392cbd60571d755bf#file-pickle_unemployment-py
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
-[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
-[Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
-[Capping CAPs]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
-[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
+[Results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
+[Postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
+[The CAP]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
+[Immigration]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
 [Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
 [Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
 [Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}
-[Pretending I know stats]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
+[Scatter plots]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}

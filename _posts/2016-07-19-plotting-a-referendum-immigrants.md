@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Plotting a Referendum - Chasing immigrants
-category: stats
+title: Plotting a Referendum - Immigration
+category: interest
 sub: true
 nex: Income
 nextfile: 2016-07-19-plotting-a-referendum-income
-prev: CAP
+prev: The CAP
 prevfile: 2016-07-19-plotting-a-referendum-cap
 ---
 {% include base.html %}
@@ -19,14 +19,14 @@ plotting graphs.
 
 * [Overview] 
 * [Sourcing data]
-    * [Handling results]
-    * [Coding postcodes]
-    * [Capping CAPs]
-    * [Counting immigrants]
+    * [Results]
+    * [Postcodes]
+    * [The CAP]
+    * [Immigration]
     * [Income]
     * [Unemployment]
 * [Mapping data]
-* [Pretending I know stats]
+* [Scatter plots]
 
 ---
 
@@ -274,117 +274,19 @@ with_pop.sortlevel(axis=1, inplace=True)
 with_pop.to_pickle('./data/immigration.pkl')
 {% endhighlight %}
 
-The whole file:
-
-{% highlight python %}
-"""
-Pickles the immigration data
-
-Data available at:
-https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/
-	migrationwithintheuk/datasets/localareamigrationindicatorsunitedkingdom
-
-Data is released under the Open Government Licence:
-	http://www.nationalarchives.gov.uk/doc/open-government-licence/
-"""
-
-import pandas as pd
-
-sheets = ['Non-UK Born Population', 'Non-British Population']
-years = ['2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012',
-        '2013', '2014']
-year_cols = ['Percent', 'CI']
-other_cols = ['10 Year Growth', 'Area Name']
-	
-def load_data(filename):
-    with pd.ExcelFile(filename) as xls:
-        result = {}
-        for s in sheets:
-            df = pd.read_excel(xls, s, header=[0, 2]).dropna(how='all')
-            df = df.loc[~df.index.str.startswith('95')]
-            df.columns.set_levels(['Area Name', '2004', '2005', '2006', '2007',
-                '2008', '2009', '2010', '2011', '2012', '2013', '2014'], level=0,
-                inplace=True)
-            df.columns.set_levels(['CI +/-', 'Estimate', 'Population', ''],
-                level=1, inplace=True)
-            for year in years:
-                df[year] = df[year].apply(lambda x: pd.to_numeric(x, errors='coerce'))
-            df.sortlevel(axis=1, inplace=True)
-            result[s] = df
-        return result
-
-def calc_perc(sub, total):
-    return sub / total * 100
-
-def calc_growth(start, end):
-    return calc_perc(end - start, start)
-
-def add_percents(df):
-    for y in years:
-        df[y, 'Percent'] = calc_perc(df[y, 'Estimate'], df[y, 'Population'])
-        df[y, 'CI'] = calc_perc(df[y, 'CI +/-'], df[y, 'Population'])
-    	
-    df['10 Year Growth', 'Val'] = calc_growth(df['2004', 'Percent'],
-    	df['2014', 'Percent'])
-    df['10 Year Growth', 'CI+'] = ( calc_growth(df['2004', 'Percent'] -
-    	df['2004', 'CI'], df['2014', 'Percent'] +	df['2014', 'CI']) -
-    	df['10 Year Growth', 'Val'] )
-    df['10 Year Growth', 'CI-'] = ( df['10 Year Growth', 'Val'] -
-        calc_growth(df['2004', 'Percent'] + df['2004', 'CI'],
-        df['2014', 'Percent'] - df['2014', 'CI']) )
-    df.sortlevel(axis=1, inplace=True)
-
-def add_descriptive_index(df, ind):
-    mi = pd.MultiIndex.from_tuples([(ind, x, y) for x, y in df.columns.values])
-    df.columns = mi
-    return df.swaplevel(0, 1, axis=1)
-
-idx = pd.IndexSlice
-
-filename = './data/v12localareamigrationindicatorsaug15_tcm77-414816.xls'
-data = load_data(filename)
-nuk = data[sheets[0]]
-nbr = data[sheets[1]]
-
-population = nuk.loc[idx[:, idx[:, 'Population']]]
-population.columns = pd.MultiIndex.from_tuples([(x, y, '') for x, y in population.columns.values])
-
-add_percents(nuk)
-nuk = add_descriptive_index(nuk, 'Non-UK Born')
-nuk.sortlevel(axis=1, inplace=True)
-
-add_percents(nbr)
-nbr = add_descriptive_index(nbr, 'Non-British')
-nbr.sortlevel(axis=1, inplace=True)
-
-nuk = pd.concat([nuk.loc[idx[:, other_cols]], nuk.loc[idx[:, idx[:, :, year_cols]]]], axis=1)
-nbr = pd.concat([nbr.loc[idx[:, other_cols]], nbr.loc[idx[:, idx[:, :, year_cols]]]], axis=1)
-cols = nbr.columns.difference(nuk.columns)
-both = pd.merge(nuk, nbr[cols], left_index=True, right_index=True, how='outer')
-both[('Area Name', '', '')] = both[('Area Name', 'Non-UK Born', '')]
-both.sortlevel(axis=1, inplace=True)
-both.drop( [('Area Name', 'Non-UK Born'), ('Area Name', 'Non-British')], axis=1,
-    inplace=True)
-
-with_pop = pd.merge(both, population, left_index=True, right_index=True,
-    how='outer')
-with_pop.sortlevel(axis=1, inplace=True)
-
-with_pop.to_pickle('./data/immigration.pkl')
-{% endhighlight %}
-
+The whole file can be found in [this gist][3].
 
 [1]: https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/localareamigrationindicatorsunitedkingdom
-
 [2]: http://www.nationalarchives.gov.uk/doc/open-government-licence/
+[3]: https://gist.github.com/jwlawson/41302a734c6d9b0392cbd60571d755bf#file-pickle_immigration-py
 
 [Overview]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum %}
 [Sourcing data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-data %}
-[Handling results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
-[Coding postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
-[Capping CAPs]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
-[Counting immigrants]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
+[Results]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-votes %}
+[Postcodes]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-postcodes %}
+[The CAP]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-cap %}
+[Immigration]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-immigrants %}
 [Income]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-income %}
 [Unemployment]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-unemployment %}
 [Mapping data]: {{ base }}{% post_url 2016-07-19-plotting-a-referendum-map %}
-[Pretending I know stats]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
+[Scatter plots]:  {{ base }}{% post_url 2016-07-19-plotting-a-referendum-stats %}
