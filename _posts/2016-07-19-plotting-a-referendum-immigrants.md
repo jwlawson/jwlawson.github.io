@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Plotting a Referendum - Immigration
+title: Plotting a referendum - Immigration
 category: interest
 sub: true
 nex: Income

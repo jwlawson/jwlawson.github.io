@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Plotting a Referendum - Counting Votes
+title: Plotting a referendum - Results
 category: interest
 sub: true
 nex: Postcodes
