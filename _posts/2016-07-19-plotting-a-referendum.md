@@ -66,7 +66,7 @@ within the EU.
 Looking at the data, the turnout itself had very little relation to how each
 area voted in the referendum.
 
-[turnout vs result][turnres]
+![turnout vs result][turnres]
 
 ## Correlations
 
@@ -91,7 +91,7 @@ The distribution of incomes over the country shows the concentration of money in
 and around London, with a surprising second place going to Copeland, in Cumbria,
 possibly because of the nuclear plant at Sellafield.
 
-[income vs result][incres]
+![income vs result][incres]
 
 Comparing the median income of an area with how it voted shows a fairly
 convincing relationship; those who earn more tended to vote to remain. However,
@@ -105,14 +105,14 @@ the most useful comparison.
 There is a higher proportion of unemployment in and around cities in the north,
 with large numbers in Middlesborough, Birmingham and Glasgow.
 
-[employment vs result][empres]
+![employment vs result][empres]
 
 This did not translate into any significant preference when voting in the EU
 referendum. It could be argued that there is a small preference for places with
 high unemployment to vote to leave the EU, but the data points look fairly
 evenly spread.
 
-[employment vs turnout][emptur]
+![employment vs turnout][emptur]
 
 Perhaps the most convincing relationship apparent in all this data is that areas
 with higher unemployment had a significantly lower turnout than those areas with
@@ -139,18 +139,18 @@ spending evident in rural Scotland and Wales.
 However when compared to the votes cast in the EU referendum, the amount of CAP
 spending seems to make little difference.
 
-[CAP Spend vs Result][capres]
+![CAP Spend vs Result][capres]
 
 A slightly more pronounced effect is seen when restricted to looking only at
 money spent from the rural development fund.
 
-[Rural development spending vs results][rurres]
+![Rural development spending vs results][rurres]
 
 However, both these datasets suffer from having such a wide range of values that
 little can be inferred from this and the graph might be misleading. Even when
 plotted with a logarithmic scale no trends can be seen.
 
-[CAP (log scale) vs result][caplogres]
+![CAP (log scale) vs result][caplogres]
 
 It would be more interesting to also study the ESIF spending in rural areas.
 These strucutral and investment projects may have more of an effect on a local
@@ -188,8 +188,8 @@ higher, tended to vote more strongly to remain in the EU. On the other hand,
 those areas where the proportion of immigrants has grown most rapidly were more
 inclined to vote to leave the EU.
 
-[Immigration vs result][immres]
-[Immigration growth vs result][imgres]
+![Immigration vs result][immres]
+![Immigration growth vs result][imgres]
 
 
 
