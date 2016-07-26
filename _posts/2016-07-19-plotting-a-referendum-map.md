@@ -46,7 +46,22 @@ import os.path
 
 basemap_pkl = './data/ward_map.pkl'
 text_col = '#555555'
+```
 
+First up we need to get a Basemap instance centered roughly on the UK. This
+takes a while to create, expecially if a detailed resolution is chosen, so we
+dump a copy of the map into a pickle file for quicker loading.
+
+This Basemap is chosen to use the trans-mercator map projection, which gives a
+recognisable shape to the UK, and we provide the elipsoid to match the data in
+the shapefile. The corners of the map are specified as the bounds of the UK
+(`llcrnr` is lower left corner, `ur` is upper right), with the map centered at
+(54, -1.7), somewhere just north of Leeds and roughly in the middle of the UK.
+
+The shapefile loaded later provides a coastline as well as the ward boundaries,
+so we choose not to load anything into the map using a resolution of `None`.
+
+```python
 def get_basemap():
     if os.path.isfile(basemap_pkl):
         with open(basemap_pkl, 'r') as f:
@@ -65,18 +80,52 @@ def get_basemap():
         with open(basemap_pkl, 'w') as f:
             pickle.dump(pmap, f, pickle.HIGHEST_PROTOCOL)
         return pmap
+```
 
+The `draw_data` function is the one which actually draws and colours the map.
+Start off with creating a new `matplotlib` figure with axes and get the colormap
+to use later, before loading the Basemap.
+
+```python
 def draw_data(data, f, colors, mx, mn, title, source='', show=False):
     fig = plt.figure(figsize=(7, 7), dpi=96)
     ax = fig.add_subplot(111, axisbg='w', frame_on=False)
     cmap = plt.get_cmap(colors)
 
     m = get_basemap()
+```
+
+The basemap can be used to read the ward shapefile. This adds two fields to the
+basemap instance `wards` and `wardsinfo`: the first contains the shapes stored
+in the file, while the second contains the additional information - ward code,
+name and so on - which is stored in the shapefile's `dbf`.
+
+As we read the shapes later we will append each shape to `patches`, along with
+that shape's colour in `colors` and the ward's name in `names`. This dictionary
+is used to provide labels for the maximum and minimum values of the data passed
+in. Unfortunately the data doesn't always match exactly with the wards in the
+shapefile, for example we have no boundary information on Northern Ireland or
+Gibraltar but these do show up in the raw data. To avoid any problems when
+looking up the names we manually add these edge cases to the dictionary at the
+start.
+
+```python
     m.readshapefile('./data/wards1', 'wards')
     patches = []
     colors = []
-    names = {'GI': 'Gibraltar', 'N92000002': 'Northern Ireland', 'N09000005':
-        'Derry and Strabane'}
+    names = {
+        'GI': 'Gibraltar',
+        'N92000002': 'Northern Ireland',
+        'N09000005': 'Derry and Strabane'
+    }
+```
+
+Now we loop through all the wards, find the correct colour to use and add that
+to the `colors` list while also constructing a `Polygon` of the ward and adding
+that to the `patches` list. If the ward does not appear in the provided data,
+then a placeholder grey color is used instead.
+
+```python
     for info, shape in zip(m.wards_info, m.wards):
         code = info['CODE']
         names[code] = info['NAME']
@@ -85,17 +134,44 @@ def draw_data(data, f, colors, mx, mn, title, source='', show=False):
         else:
             colors.append((0.3, 0.3, 0.3, 1.0))
         patches.append(Polygon(np.array(shape), True))
+```
 
+With our list of patches and colours finished we use a `PatchCollection` to
+collect them together and draw them to the axes. The first polygon will be
+coloured with the first colour, second with the second, etc, until all wards are
+drawn.
+
+```python
     pc = PatchCollection(patches, edgecolor=text_col, linewidths=.1, zorder=2)
     pc.set_facecolor(colors)
     ax.add_collection(pc)
+```
 
+At this point, the map has been drawn and coloured. All that is left is to add
+useful data such as a colourbar key, labels, information and smallprint.
+
+Adding a colourbar requires a `ScalarMappable`, which is usually used to both
+normalise and colour data. As we have been normalising the data separately we
+need to construct a dummy instance which contains our colour map.
+
+```python
     mappable = cm.ScalarMappable(cmap=cmap)
     mappable.set_array([])
     mappable.set_clim(0, 1)
     cbar = fig.colorbar(mappable, ticks=[0, 1], shrink=0.5)
     cbar_labels = cbar.ax.set_yticklabels([mn, mx], color=text_col)
+```
 
+Sort the data and extract the maximum and minimum values to show on the side. By
+drawing on the colorbar axes, this text appears to the side of the map and out
+of the way. The coordinates provided to the text instance are linked to the
+colorbar, with y=1 being the top and y=0 the bottom of the bar.
+
+Also add the smallprint to the bottom of the map. We need to use
+`transform=ax.transAxes` to map the coordinates of the text instance to the
+coordinates of the figure, with the corners of the axes being (0,0), (0,1) etc.
+
+```python
     sort = data.dropna().sort_values(ascending=False)
     highest = '\n'.join([ names[i] for i in sort.index[:4]])
     highest = 'Maximum Wards:\n\n' + highest
@@ -121,7 +197,12 @@ def draw_data(data, f, colors, mx, mn, title, source='', show=False):
         size=4,
         color=text_col,
         transform=ax.transAxes)
+```
 
+Now we save the map in a range of sizes. At each point we resize the text, so
+that it appears natural and a consistend size.
+
+```python
     title = ax.set_title(title, color=text_col)
     plt.tight_layout()
     fig.savefig('img/' + f + '_7.png', dpi=96, bbox_inches='tight')
@@ -144,7 +225,13 @@ def draw_data(data, f, colors, mx, mn, title, source='', show=False):
 
     if(show):
         plt.show()
+```
 
+We also provide a helper function which automatically scales some data and uses
+that to draw a map. This allows us to easily draw maps without having to copy
+the normalising code each time.
+
+```python
 def scale_draw(data, f, colors, title, source='', show=False):
     """
     Draws the provided data onto a chloropleth map of the UK. The data will be

@@ -224,7 +224,7 @@ inclined to vote to leave the EU.
 [imgmap]: {{ base }}/assets/2016-07-19/nonbritgrowth_7.png "Map showing growth in proportion of immigrant population by region"
 [largeimgmap]: {{ base }}/assets/2016-07-19/nonbritgrowth_12.png
 
-[turnres]: {{ base }}/assets/2016-07-19/Pct_Turnout-Result.png "Comparison of turnout with result"
+[turnres]: {{ base }}/assets/2016-07-19/sc/Pct_Turnout-Result.png "Comparison of turnout with result"
 [incres]: {{ base }}/assets/2016-07-19/sc/Income-Result.png "Comparison of income with result"
 [emptur]: {{ base }}/assets/2016-07-19/sc/Pct_Unemployed-Pct_Turnout.png "Comparison of unemployment in an area with turnout"
 [empres]: {{ base }}/assets/2016-07-19/sc/Pct_Unemployed-Result.png "Comparison of unemployment in an area with results"
