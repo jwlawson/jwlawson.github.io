@@ -1,37 +1,21 @@
 body {
-	line-height: 1;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-body {
   font-size: 15px;
   line-height: 1.5;
   background-color: #fafafa;
-  font-family: 'Helvetica Neue', Helvetica, Arial, serif;
-  font-weight: 400;
   color: #666;
 }
-a {
-  color: #2879d0;
-}
-a:hover {
-  color: #2268b2;
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
+  color: #474747;
 }
 header {
   padding-top: 16px;
   padding-bottom: 20px;
   background: #3280d2 url(../images/header-bg.png) 0 0 repeat-x;
-  border-bottom: solid 1px #275da1;
+  border-bottom: solid 2px #275da1;
 }
 header h1 {
-  letter-spacing: -1px;
   font-size: 60px;
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
-  color: #fff;
-  line-height: 1;
-  margin-bottom: 0.2em;
 }
 header a {
 	color: #fff;
@@ -40,12 +24,7 @@ header a:hover {
 	color: #bbddff;
 }
 #content-wrapper {
-  border-top: solid 1px #fff;
   padding-top: 30px;
-}
-#main-content img {
-  max-width: 100%;
-  max-height: 500px;
 }
 aside#sidebar {
   padding-left: 20px;
@@ -53,13 +32,11 @@ aside#sidebar {
   background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
   font-size: 12px;
 }
-aside#sidebar p.repo-owner,
-aside#sidebar p.repo-owner a {
-  font-weight: bold;
-}
 aside#sidebar h2 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
 	font-size: 13px;
+}
+aside#sidebar li {
+  width: 100%;
 }
 a.button {
   width: 134px;
@@ -75,23 +52,6 @@ a.button small {
   display: block;
   font-size: 11px;
 }
-ul, ol, dl {
-  margin-bottom: 20px;
-}
-hr {
-  height: 1px;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  border: none;
-  background: #aaa;
-}
-form {
-  background: #f2f2f2;
-  padding: 20px;
-}
-ol {
-  list-style: decimal inside;
-}
 ul#postlist {
   padding-left: 20px;
 }
@@ -104,14 +64,9 @@ ul#travellist {
 ul#travellist span {
 	font-size: 75%;
 }
-#main-content h1,
-#main-content h2,
-#main-content h3,
-#main-content h4,
-#main-content h5,
-#main-content h6 {
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, serif;
-  color: #474747;
+#main-content img {
+  max-width: 100%;
+  max-height: 500px;
 }
 #main-content h1 {
   font-size: 2.8em;
@@ -138,99 +93,79 @@ ul#travellist span {
 #main-content h6 {
   font-size: .8em;
 }
-a {
-  text-decoration: none;
-}
-footer {
-  background-color: transparent;
-  margin-top: 40px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-  font-size: 13px;
-  color: #aaa;
-}
-footer a {
-  color: #666;
-}
-footer a:hover {
-  color: #444;
-}
 div.triple-col {
   text-align: center;
 }
-div.triple-col a {
-  color: #666;
+div.triple-col  a {
+    color: #666;
 }
-div.triple-col a:hover {
-  color: #2268b2;
+div.triple-col  a:hover {
+    color: #2268b2;
 }
-#main-content div.triple-col h1:before,
-#main-content div.triple-col h2:before,
-#main-content div.triple-col h3:before,
-#main-content div.triple-col h4:before,
-#main-content div.triple-col h5:before,
-#main-content div.triple-col h6:before {
+div.triple-col h1:before,
+div.triple-col h2:before,
+div.triple-col h3:before,
+div.triple-col h4:before,
+div.triple-col h5:before,
+div.triple-col h6:before {
   content: none;
   padding-right: 0;
   margin-left: 0;
 }
-#main-content div.triple-col a h1,
-#main-content div.triple-col a h2,
-#main-content div.triple-col a h3,
-#main-content div.triple-col a h4,
-#main-content div.triple-col a h5,
-#main-content div.triple-col a h6 {
+div.triple-col a h1,
+div.triple-col a h2,
+div.triple-col a h3,
+div.triple-col a h4,
+div.triple-col a h5,
+div.triple-col a h6 {
   margin-top: 2px;
   margin-bottom: 0;
 }
-#main-content div.triple-col a:hover h1,
-#main-content div.triple-col a:hover h2,
-#main-content div.triple-col a:hover h3,
-#main-content div.triple-col a:hover h4,
-#main-content div.triple-col a:hover h5,
-#main-content div.triple-col a:hover h6 {
+div.triple-col a:hover h1,
+div.triple-col a:hover h2,
+div.triple-col a:hover h3,
+div.triple-col a:hover h4,
+div.triple-col a:hover h5,
+div.triple-col a:hover h6 {
   color: #2268b2;
 }
-aside#sidebar li {
-  width: 100%;
-}
 @media only screen and (min-width: 1200px) {
-#main-content h1:before {
-  content: "/";
-  color: #9ddcff;
-  margin-left: -0.6em;
-  padding-right: 0.3em;
-}
-#main-content h2:before {
-  content: "//";
-  color: #9ddcff;
-  margin-left: -0.7em;
-  padding-right: 0.3em;
-}
-#main-content h3:before {
-  content: "///";
-  color: #9ddcff;
-  margin-left: -0.8em;
-  padding-right: 0.3em;
-}
-#main-content h4:before {
-  content: "////";
-  color: #9ddcff;
-  margin-left: -0.85em;
-  padding-right: 0.3em;
-}
-#main-content h5:before {
-  content: "/////";
-  color: #9ddcff;
-  margin-left: -0.9em;
-  padding-right: 0.3em;
-}
-#main-content h6:before {
-  content: "//////";
-  color: #9ddcff;
-  margin-left: -0.95em;
-  padding-right: 0.3em;
-}
+  #main-content h1:before {
+    content: "/";
+    color: #9ddcff;
+    margin-left: -0.6em;
+    padding-right: 0.3em;
+  }
+  #main-content h2:before {
+    content: "//";
+    color: #9ddcff;
+    margin-left: -0.7em;
+    padding-right: 0.3em;
+  }
+  #main-content h3:before {
+    content: "///";
+    color: #9ddcff;
+    margin-left: -0.8em;
+    padding-right: 0.3em;
+  }
+  #main-content h4:before {
+    content: "////";
+    color: #9ddcff;
+    margin-left: -0.85em;
+    padding-right: 0.3em;
+  }
+  #main-content h5:before {
+    content: "/////";
+    color: #9ddcff;
+    margin-left: -0.9em;
+    padding-right: 0.3em;
+  }
+  #main-content h6:before {
+    content: "//////";
+    color: #9ddcff;
+    margin-left: -0.95em;
+    padding-right: 0.3em;
+  }
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   header h1 {
