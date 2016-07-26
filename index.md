@@ -12,7 +12,7 @@ and the geometric applications of them.
 {% include base.html %}
 <div class="row triple-col">
 <div class="col-sm-4">
-  <a class="thumbnail" href="{{ base }}/research">
+  <a class="thumbnail" href="http://www.maths.dur.ac.uk/users/j.w.lawson/">
   <i class="fa fa-flask fa-4x"></i>
   <h3>Research</h3>
   <p>Discover recent research.</p>
@@ -35,11 +35,13 @@ and the geometric applications of them.
 </div>
 
 ### Side projects and interesting things
-<dl id="side-projects">
-  {% for post in site.categories.interest %}
-    {% unless post.sub %}
-        <dt><a href="{{ post.url }}">{{ post.title }}</a></dt>
-				<dd>{{ post.excerpt | markdownify }}</dd>
-    {% endunless %}
-  {% endfor %}
-</dl>
+<ul id="side-projects" class="list-unstyled">
+	{% for post in site.categories.interest %}
+	{% unless post.sub %}
+		<li class="panel panel-info">
+			<div class="panel-heading"><a href="{{ post.url }}">{{ post.title }}</a></div>
+			<div class="panel-body">{{ post.excerpt | markdownify }}</div>
+		</li>
+	{% endunless %}
+	{% endfor %}
+</ul>

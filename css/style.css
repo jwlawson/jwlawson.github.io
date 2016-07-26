@@ -66,6 +66,7 @@ ul#travellist span {
 }
 ul#smallprint {
 	font-size: 8px;
+	margin-top: 20px;
 }
 ul#smallprint a {
 	color: #474747;
@@ -249,6 +250,7 @@ div.triple-col  a:hover {
 .highlight .kd { font-weight: bold }
 .highlight .kp { font-weight: bold }
 .highlight .kr { font-weight: bold }
+.highlight .kn { font-weight: bold }
 .highlight .kt { color: #445588; font-weight: bold }
 .highlight .m { color: #009999 }
 .highlight .s { color: #d14 }
