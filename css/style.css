@@ -102,31 +102,31 @@ div.triple-col  a {
 div.triple-col  a:hover {
     color: #2268b2;
 }
-div.triple-col h1:before,
-div.triple-col h2:before,
-div.triple-col h3:before,
-div.triple-col h4:before,
-div.triple-col h5:before,
-div.triple-col h6:before {
+#main-content div.triple-col h1:before,
+#main-content div.triple-col h2:before,
+#main-content div.triple-col h3:before,
+#main-content div.triple-col h4:before,
+#main-content div.triple-col h5:before,
+#main-content div.triple-col h6:before {
   content: none;
   padding-right: 0;
   margin-left: 0;
 }
-div.triple-col a h1,
-div.triple-col a h2,
-div.triple-col a h3,
-div.triple-col a h4,
-div.triple-col a h5,
-div.triple-col a h6 {
+#main-content div.triple-col a h1,
+#main-content div.triple-col a h2,
+#main-content div.triple-col a h3,
+#main-content div.triple-col a h4,
+#main-content div.triple-col a h5,
+#main-content div.triple-col a h6 {
   margin-top: 2px;
   margin-bottom: 0;
 }
-div.triple-col a:hover h1,
-div.triple-col a:hover h2,
-div.triple-col a:hover h3,
-div.triple-col a:hover h4,
-div.triple-col a:hover h5,
-div.triple-col a:hover h6 {
+#main-content div.triple-col a:hover h1,
+#main-content div.triple-col a:hover h2,
+#main-content div.triple-col a:hover h3,
+#main-content div.triple-col a:hover h4,
+#main-content div.triple-col a:hover h5,
+#main-content div.triple-col a:hover h6 {
   color: #2268b2;
 }
 @media only screen and (min-width: 1200px) {

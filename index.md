@@ -42,4 +42,4 @@ and the geometric applications of them.
 				<dd>{{ post.excerpt | markdownify }}</dd>
     {% endunless %}
   {% endfor %}
-</ul>
+</dl>
