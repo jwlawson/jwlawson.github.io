@@ -33,3 +33,13 @@ and the geometric applications of them.
   </a>
 </div>
 </div>
+
+### Side projects and interesting things
+<dl id="side-projects">
+  {% for post in site.categories.interest %}
+    {% unless post.sub %}
+        <dt><a href="{{ post.url }}">{{ post.title }}</a></dt>
+				<dd>{{ post.excerpt | markdownify }}</dd>
+    {% endunless %}
+  {% endfor %}
+</ul>
