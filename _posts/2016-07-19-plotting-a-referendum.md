@@ -4,7 +4,6 @@ title: Plotting a referendum
 category: interest
 nex: Sourcing data
 nextfile: 2016-07-19-plotting-a-referendum-data
-excerpt_separator: <!--end-exceprt-->
 ---
 
 Following the shock decision by the UK to leave the EU, many ideas were put 
@@ -25,7 +24,7 @@ plotting graphs.
     * [Unemployment]
 * [Mapping data]
 * [Scatter plots]
-<!--end-exceprt-->
+<!--end-excerpt-->
 
 ---
 
