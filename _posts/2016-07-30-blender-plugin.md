@@ -12,6 +12,8 @@ The finished video:
 <iframe width="560" height="315" src="https://www.youtube.com/embed/df1EAIxAFVc" frameborder="0" allowfullscreen></iframe>
 <!--end-excerpt-->
 
+The add-on requires very few dependencies as I had no idea what might be available to a default install of blender. In fact `struct`, `imghdr` and `re` are only used by the `get_image_size` function, which could easily be replaced by `PIL` or similar if available.
+
 ```python
 """
 Blender add-on which provides a function in the VSE to rescale images to their
@@ -48,7 +50,6 @@ In order to rescale a provided image we need to get the dimensions of the image.
 Stack exchange is full of all sorts of code snippets, supposedly available under the MIT license with 'reasonable attribution'. However there is no guarantee that whoever posts on SE is actually the original author of the code, so they don't actually have the right to provide the code under that license.
 
 There is a now unmaintained python library/program [Draco] which was licensed under GPLv2 and looks to have been abandoned sometime around 2004/05. In Draco's `image.py` there is a function which finds the size of an image by looking at the file header without needing any external dependencies. This function has now been posted on stack exchange and since improved and modified and now is included in a number of different projects. It is not at all clear how to interpret the license of this code now. The initial code was licensed with GPLv2, so all derivatives should also be GPLv2. However, once posted to SE many developers have assumed that the code is available under the much more unrestrictive MIT license.
-
 
 ```python
 def get_image_size(fname):
@@ -113,6 +114,18 @@ def get_image_size(fname):
         return width, height
 ```
 
+<div class="panel panel-info panel-body">
+This code is roughly equivalent to
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="k">def</span> <span class="nf">get_image_size</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span>
+</code></pre>
+</div>
+but does not require any dependencies. If you have <code class="highligher-rouge">PIL</code> installed, then it is almost certainly better to use this smaller, easier to read, easier to maintain version.
+</div>
+
 Now we finally get on with the add-on class. Each class needs a `poll` method, which is used to check whether the context is right to show the function, and an `execute` method which actually does whatever your function should do.
 
 ```python
@@ -141,7 +154,8 @@ We finally get to the method which resizes the image in the video editor. First 
 
 After being imported into blender the image is squished into the exact render size, so `render_x by render_y` with aspect ratio `asp_n = render_x / render_y`. The aim is to scale the image so that the aspect ratio is infact `asp_o = orig_x / orig_y`, so we scale the `x` coord by `asp_o / asp_n`, which in fact is the same as scaling by `render_y / render_x * orig_x / orig_y`.
 
-The scaling is done by adding an effect strip. The call to `sequencer.effect_strip_add` automatically selets the newly added effect strip, so we use `active_strip` to get a reference to the transform in order to set the scale in it.
+The scaling is done by adding an effect strip. The call to `sequencer.effect_strip_add` automatically selects the newly added effect strip, so we use `active_strip` to get a reference to this transform in order to set the scale in it.
+
 ```python
     def execute(self, context):
         """
