@@ -39,7 +39,7 @@ and the geometric applications of them.
 	{% for post in site.categories.interest %}
 	{% unless post.sub %}
 		<li class="panel panel-info">
-			<div class="panel-heading"><a href="{{ post.url }}">{{ post.title }}</a></div>
+			<div class="panel-heading"><a href="{{ base }}{{ post.url }}">{{ post.title }}</a></div>
 			<div class="panel-body">{{ post.excerpt | markdownify }}</div>
 		</li>
 	{% endunless %}
