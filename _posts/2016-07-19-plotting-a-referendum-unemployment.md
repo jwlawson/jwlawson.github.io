@@ -30,7 +30,7 @@ plotting graphs.
 
 ---
 
-As with the income data, the unemployment data is downloaded from nomis, and so
+As with the income data, the unemployment data is downloaded from Nomis, and so
 is already close to how we want it. All that is required is removing some rows
 which contain invalid data, as well as renaming the columns, before saving as a
 pickle.

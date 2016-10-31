@@ -30,7 +30,7 @@ plotting graphs.
 
 ---
 
-We need to collect information on the relation between postcdoes and voting
+We need to collect information on the relation between postcodes and voting
 districts as the CAP data is indexed by postcode prefix and is not available
 with the ward data. In this file we construct a 'map' which takes postcode
 prefix to a corresponding (approximate) district ward.
@@ -93,7 +93,7 @@ a = combine_all()
 a = a[['Postcode', 'Admin_district_code']]
 a.columns = ['Postcode', 'Ward']
 ```
-So far we have a list of all postcodes from the UK, each of which has a disrtict
+So far we have a list of all postcodes from the UK, each of which has a district
 ward code. The CAP data is provided with only the prefix of the postcode, so we
 extract the first 4 chars from each and set that as a column `PC Prefix`.
 

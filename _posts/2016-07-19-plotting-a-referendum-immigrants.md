@@ -39,7 +39,7 @@ and data. The complete file is included at the bottom of the page.
 Of the whole spreadsheet, we are only interested in looking at the immigration
 data in local areas. We focus on the number of non-British people in an area as
 well as the number of people not born within the UK. The data is provided over
-10 years from 2004 throught to 2016.
+10 years from 2004 thought to 2016.
 
 {% highlight python %}
 """
@@ -91,7 +91,7 @@ To simplify things a bit we change the top column headers to just the year.
         level=1, inplace=True)
 {% endhighlight %}
 
-The excel file contains colons for non-existant data, which confuses pandas and
+The excel file contains colons for non-existent data, which confuses pandas and
 forces each of the data columns to be `object` type rather than numeric which we
 need to perform any computations. To force them to be numeric we apply
 `pd.to_numeric` to each column and passing `errors='coerce'` tells pandas to set
@@ -129,14 +129,14 @@ def load_data(filename):
 {% endhighlight %}
 
 Now that we have the DataFrames set up we want to extract some useful
-information from the data. For the sake of simplicity, thoughout this we ignore
+information from the data. For the sake of simplicity, throughout this we ignore
 the confidence intervals and use the stated estimates as true values. This loses
 a chunk of information which should be considered if any rigorous conclusions are to
-made from the data, however we are doing this as a fun exersise and out of
+made from the data, however we are doing this as a fun exercise and out of
 interest.
 
-For each year, the numbers of immigrants are converted into a percentage fo the
-total local population. Pandas allows appending a column by simply refering to
+For each year, the numbers of immigrants are converted into a percentage of the
+total local population. Pandas allows appending a column by simply referring to
 it and assigning it a set of values.
 
 Using these percentages, we then compute the growth of the percentage of
@@ -225,7 +225,7 @@ pop.columns = index
 {% endhighlight %}
 
 Now use the functions defined above to add percentages, growth and other data to
-each of the dataframes.
+each of the DataFrames.
 
 {% highlight python %}
 add_percents(nuk)

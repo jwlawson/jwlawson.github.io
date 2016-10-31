@@ -49,11 +49,11 @@ text_col = '#555555'
 ```
 
 First up we need to get a Basemap instance centered roughly on the UK. This
-takes a while to create, expecially if a detailed resolution is chosen, so we
+takes a while to create, especially if a detailed resolution is chosen, so we
 dump a copy of the map into a pickle file for quicker loading.
 
 This Basemap is chosen to use the trans-mercator map projection, which gives a
-recognisable shape to the UK, and we provide the elipsoid to match the data in
+recognisable shape to the UK, and we provide the ellipsoid to match the data in
 the shapefile. The corners of the map are specified as the bounds of the UK
 (`llcrnr` is lower left corner, `ur` is upper right), with the map centered at
 (54, -1.7), somewhere just north of Leeds and roughly in the middle of the UK.
@@ -148,9 +148,9 @@ drawn.
 ```
 
 At this point, the map has been drawn and coloured. All that is left is to add
-useful data such as a colourbar key, labels, information and smallprint.
+useful data such as a colorbar key, labels, information and smallprint.
 
-Adding a colourbar requires a `ScalarMappable`, which is usually used to both
+Adding a colorbar requires a `ScalarMappable`, which is usually used to both
 normalise and colour data. As we have been normalising the data separately we
 need to construct a dummy instance which contains our colour map.
 
@@ -200,7 +200,7 @@ coordinates of the figure, with the corners of the axes being (0,0), (0,1) etc.
 ```
 
 Now we save the map in a range of sizes. At each point we resize the text, so
-that it appears natural and a consistend size.
+that it appears natural and a consistent size.
 
 ```python
     title = ax.set_title(title, color=text_col)

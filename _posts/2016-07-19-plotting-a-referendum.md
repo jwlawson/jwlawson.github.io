@@ -33,7 +33,7 @@ This project was really just an attempt to learn more about handling data and
 drawing maps. The results and statements are provided with little to no support,
 no confidence intervals are considered and no rigour is provided. Not all this
 data is entirely accurate or totally present and any confidence intervals are
-completely ignored. Remember: correlation does not imply caustation.
+completely ignored. Remember: correlation does not imply causation.
 </div></div>
 
 
@@ -57,7 +57,7 @@ winning, even though there were fewer than two thousand votes between them.
 The turnout for the election was high, at around 74% on average. The smallest
 turnout came form the cities of Glasgow, London and Manchester. London in
 particular showed a surprisingly low turnout across the area, which may have
-changed the result as London proved to be singificantly in favour of remaining
+changed the result as London proved to be significantly in favour of remaining
 within the EU.
 
 [![turnout map][turnoutmap]][largeturnoutmap]
@@ -119,10 +119,10 @@ lower unemployment.
 
 #### CAP Spending
 
-At the time of the vote there was a feeliung that many of the regions which
+At the time of the vote there was a feeling that many of the regions which
 benefit the most from EU spending had in fact voted to leave, and so stop
 receiving this spending. The majority of EU spending comes in two forms: the CAP
-and the European Strucutral and Investment Funds. The EU requires that all CAP
+and the European Structural and Investment Funds. The EU requires that all CAP
 expenditure is freely available, so we consider that here.
 
 The CAP (Common Agricultural Policy) is responsible for a large proportion of
@@ -152,7 +152,7 @@ plotted with a logarithmic scale no trends can be seen.
 ![CAP (log scale) vs result][caplogres]
 
 It would be more interesting to also study the ESIF spending in rural areas.
-These strucutral and investment projects may have more of an effect on a local
+These structural and investment projects may have more of an effect on a local
 area than the CAP which ultimately is paid only to the landowners. In the period
 2014-2020, the UK was expected to receive around £10.8bn for the ESIF (see
 [Vince Cable's letter][esif letter]).
@@ -160,7 +160,7 @@ area than the CAP which ultimately is paid only to the landowners. In the period
 
 #### Immigration
 
-Imimgration was widely touted as the reason many voted to leave the EU. By
+Immigration was widely touted as the reason many voted to leave the EU. By
 leaving, we were told, the UK could regain control over its borders and prevent
 the free movement of labour. This free movement has frequently been criticized,
 backed by the popular mantra that immigrants are stealing jobs and claiming

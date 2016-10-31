@@ -59,7 +59,7 @@ Here we need their `Code-Point Open` data and while you're there you should also
 get their `Boundary-Line` data as a `ESRI Shapefile`.
 
 The Boundary-Line data is the shapefile containing polygons of all the electoral
-and administrative bundaries across the country. We will be using the District
+and administrative boundaries across the country. We will be using the District
 Electoral boundaries to draw the maps.
 
 #### Immigration data
@@ -78,7 +78,7 @@ The Electoral Commission released the EU referendum results online, available
 #### Nomis - unemployment and income
 
 The best source for data on income and unemployment by local area was from the
-Office for National Statistics's [Nomis website](https://www.nomisweb.co.uk/),
+Office for National Statistic's [Nomis website](https://www.nomisweb.co.uk/),
 which provides a range of data on the UK labour markets. We need to download
 two sets of data:
 

@@ -30,7 +30,7 @@ plotting graphs.
 
 ---
 
-The Electoral commision has made Referendum results available [online][1]. Note
+The Electoral Commission has made Referendum results available [online][1]. Note
 that the data is available under the [Open Government License v2.0][2].
 
 The following assumes that the `.csv` file is in the current directory and called
