@@ -82,8 +82,7 @@ void swap(int& a, int& b) {
 }
 {% endhighlight %}
 
-<div class="highlighter-rouge"><pre class="highlight"><code>
-  push    rbp
+<div class="highlighter-rouge"><pre class="highlight"><code>  push    rbp
   mov     rbp, rsp
   mov     QWORD PTR [rbp-24], rdi
   mov     QWORD PTR [rbp-32], rsi
@@ -129,7 +128,7 @@ the CPU registers.
 Other ways of swapping integers include using maths and using bitwise
 operations:
 
-<div class="container row">
+<div class="row">
 <figure class="col-sm-12 col-md-6 highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">swap_tmp</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
 	<span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
 	<span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
@@ -145,8 +144,7 @@ operations:
 	<span class="n">b</span> <span class="o">^=</span> <span class="n">a</span><span class="p">;</span>
 	<span class="n">a</span> <span class="o">^=</span> <span class="n">b</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
-<div class="col-sm-12 col-md-6 highlighter-rouge"><pre class="highlight"><code>
-swap_tmp(int&, int&):
+<div class="col-sm-12 col-md-6 highlighter-rouge"><pre class="highlight"><code>swap_tmp(int&, int&):
         mov     eax, DWORD PTR [rdi]
         mov     edx, DWORD PTR [rsi]
         mov     DWORD PTR [rdi], edx
@@ -222,9 +220,8 @@ the compiler into optimising the swap function, but not optimising so well that
 it realises we're not really doing anything in the function. We use the for-loop
 and return statement to help trick the compiler, and we get the following:
 
-<div class="container row">
-<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>
-main:
+<div class="row">
+<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>main:
         test    edi, edi
         jle     .L7
         mov     eax, 1
@@ -247,8 +244,7 @@ main:
         mov     eax, 0
         jmp     .L5
 </code></pre></div>
-<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>
-main:
+<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>main:
         test    edi, edi
         jle     .L7
         mov     eax, 1
@@ -271,8 +267,7 @@ main:
         xor     eax, eax
         jmp     .L5
 </code></pre></div>
-<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>
-main:
+<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>main:
         xor     eax, eax
         test    edi, edi
         mov     ecx, 1
