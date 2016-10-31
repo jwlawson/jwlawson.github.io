@@ -453,7 +453,7 @@ same time.
 [carruth-talk]: https://www.youtube.com/watch?v=nXaxk27zwlk
 [godbolt]: http://gcc.godbolt.org/
 
-{{% include base.html %}
+{% include base.html %}
 [title-slide]: {{ base }}/assets/2016-10-31/title-slide.png
 [compiler-slide]: {{ base }}/assets/2016-10-31/slide-1.png
 [computer-slide]: {{ base }}/assets/2016-10-31/slide-5.png
