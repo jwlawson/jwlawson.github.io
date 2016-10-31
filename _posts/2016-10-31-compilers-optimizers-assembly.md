@@ -82,7 +82,7 @@ void swap(int& a, int& b) {
 }
 {% endhighlight %}
 
-{% highlight %}
+```
   push    rbp
   mov     rbp, rsp
   mov     QWORD PTR [rbp-24], rdi
@@ -100,7 +100,7 @@ void swap(int& a, int& b) {
   nop
   pop     rbp
   ret
-{% endhighlight %}
+```
 
 This code does a lot stuff for such a simple function. It starts off with the
 address of `a` in `rdi`, which gets copied onto the stack (`mov QWORD PTR
@@ -113,13 +113,13 @@ compiler defaults to doing exactly what the code tells it.
 If we now turn on the first level of optimisers, so compile with `gcc -O1`, we
 get the much nicer assembly:
 
-{% highlight %}
+```
   mov     eax, DWORD PTR [rdi]
   mov     edx, DWORD PTR [rsi]
   mov     DWORD PTR [rdi], edx
   mov     DWORD PTR [rsi], eax
   ret
-{% endhighlight %}
+```
 
 Which avoids the pointless copying and simply loads both `a` and `b` into
 registers before copying them back out into memory. Note that although the code
@@ -146,7 +146,8 @@ void swap_xor(int& a, int& b) {
 	a ^= b;
 }
 {% endhighlight %}
-{% highlight %}
+
+```
 swap_tmp(int&, int&):
         mov     eax, DWORD PTR [rdi]
         mov     edx, DWORD PTR [rsi]
@@ -169,7 +170,7 @@ swap_xor(int&, int&):
         mov     DWORD PTR [rsi], eax
         xor     DWORD PTR [rdi], eax
         ret
-{% endhighlight %}
+```
 
 These other options do not use the temporary variable, so on the face of it look
 to be more efficient with memory, in stead using more complicated operations.
@@ -222,7 +223,7 @@ the compiler into optimising the swap function, but not optimising so well that
 it realises we're not really doing anything in the function. We use the for-loop
 and return statement to help trick the compiler, and we get the following:
 
-{% highlight %}
+```
 main:
         test    edi, edi
         jle     .L7
@@ -245,9 +246,9 @@ main:
         mov     ecx, 1
         mov     eax, 0
         jmp     .L5
-{% endhighlight %}
+```
 
-{% highlight %}
+```
 main:
         test    edi, edi
         jle     .L7
@@ -270,9 +271,9 @@ main:
         mov     ecx, 1
         xor     eax, eax
         jmp     .L5
-{% endhighlight %}
+```
 
-{% highlight %}
+```
 main:
         xor     eax, eax
         test    edi, edi
@@ -287,7 +288,7 @@ main:
 .L5:
         sub     eax, ecx
         ret
-{% endhighlight %}
+```
 
 It turns out the compiler generates the same code for both `swap_tmp` and for
 `swap_add` where the main swapping loop occurs between the labels `.L8` and
@@ -379,7 +380,7 @@ To see why we need to once again delve into the assembly. For the `-O1` case,
 the whole function is made up of 16 assembly lines and the inner loop of the
 accumulate calculation looks like:
 
-{% highlight %}
+```
         ...
         mov     DWORD PTR [rdx], ecx
         add     rdx, 4
@@ -387,13 +388,13 @@ accumulate calculation looks like:
         cmp     rdi, rdx
         jne     .L12
         ...
-{% endhighlight %}
+```
 
 Whereas in the more optimised case, the assembly has over 120 lines, with loads
 more complexity, jumps and comparisons. The interesting thing though is that the
 inner loop now looks like:
 
-{% highlight %}
+```
         ...
         add     ecx, 1
         paddd   xmm0, XMMWORD PTR [r9]
@@ -401,7 +402,7 @@ inner loop now looks like:
         cmp     eax, ecx
         ja      .L9
         ...
-{% endhighlight %}
+```
 
 Which uses a new instruction `paddd` and a different register `xmm0`. These are
 from the SSE vector instruction set, which is a completely different part of the
@@ -440,19 +441,19 @@ same time.
 
 * Jason Turner's [Introduction to assembly][assm-intro] and all his C++ weekly
 	videos are good watches.
-* Chandler Carruth's talk [Tuning C++: Benchmarks, and CPUs, and Compilers! Oh
-	My!][carruth-talk] inspired this presentation, and goes into much more depth
-	with benchmarking, performance and compilers.
+* Chandler Carruth's talk [Tuning C++: Benchmarks, and CPUs, and Compilers! Oh My!][carruth-talk]
+	inspired this presentation, and goes into much more depth about benchmarking,
+	performance and compilers.
 * The [Compiler explorer][godbolt] is a great place to play around with assembly
 	and see what different compilers and options give you.
 
-{{% include base.html %}
 [computer-seminar]: https://www.dur.ac.uk/mathematical.sciences/events/seminars/seminararchives/?series=130
 [github-opt-talk]: https://github.com/jwlawson/opt-talk
 [assm-intro]: https://www.youtube.com/watch?v=my39Gpt6bvY
 [carruth-talk]: https://www.youtube.com/watch?v=nXaxk27zwlk
 [godbolt]: http://gcc.godbolt.org/
 
+{{% include base.html %}
 [title-slide]: {{ base }}/assets/2016-10-31/title-slide.png
 [compiler-slide]: {{ base }}/assets/2016-10-31/slide-1.png
 [computer-slide]: {{ base }}/assets/2016-10-31/slide-5.png
