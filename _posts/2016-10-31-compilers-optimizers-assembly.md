@@ -446,6 +446,7 @@ same time.
 * The [Compiler explorer][godbolt] is a great place to play around with assembly
 	and see what different compilers and options give you.
 
+{{% include base.html %}
 [computer-seminar]: https://www.dur.ac.uk/mathematical.sciences/events/seminars/seminararchives/?series=130
 [github-opt-talk]: https://github.com/jwlawson/opt-talk
 [assm-intro]: https://www.youtube.com/watch?v=my39Gpt6bvY
