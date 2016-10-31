@@ -50,7 +50,7 @@ L1 taking just a couple of nanoseconds, L2 roughly 10ns and L3 around 50ns. Any
 data which is too big for caches end up in RAM or failing that the hard drive -
 both of which are significantly slower than the cached store.
 
-![Rough intro to assembly][assm-slide]
+![Rough intro to assembly][assembly-slide]
 
 Assembly uses the registers directly, with various ways of accessing them and
 the data in them. A 64 bit processor can pretend that any of its registers are
@@ -246,6 +246,7 @@ main:
         mov     eax, 0
         jmp     .L5
 {% endhighlight %}
+
 {% highlight %}
 main:
         test    edi, edi
@@ -270,6 +271,7 @@ main:
         xor     eax, eax
         jmp     .L5
 {% endhighlight %}
+
 {% highlight %}
 main:
         xor     eax, eax
@@ -289,7 +291,7 @@ main:
 
 It turns out the compiler generates the same code for both `swap_tmp` and for
 `swap_add` where the main swapping loop occurs between the labels `.L8` and
-'.L6`, while `swap_xor` uses the special instruction `xchg ecx, eax` which swaps
+`.L6`, while `swap_xor` uses the special instruction `xchg ecx, eax` which swaps
 the values in the two registers `ecx` and `eax`.
 
 So this is the first lesson of compiler optimisers. Different C++ can give the
