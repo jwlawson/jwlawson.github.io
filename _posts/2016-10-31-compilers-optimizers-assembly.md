@@ -18,11 +18,11 @@ compiler. When I suggested turning the optimisers on his code performed around
 10 times fast with no extra work.
 
 <div class="panel panel-info"><div class="panel-body">
-This whole talk/post can really be summarised as: use `-O3 -march=native` when
+This whole talk/post can really be summarised as: use <code>-O3 -march=native</code> when
 compiling C++. This allows the compiler to do lots of clever things to speed up
 your code.
 
-The code used as examples throughout is available on [Github][github-opt-talk].
+The code used as examples throughout is available on <a href="https://github.com/jwlawson/opt-talk">Github</a>.
 </div></div>
 
 ![Compilers turn human code into machine code][compiler-slide]
@@ -82,7 +82,7 @@ void swap(int& a, int& b) {
 }
 {% endhighlight %}
 
-```
+<div class="highlighter-rouge"><pre class="highlight"><code>
   push    rbp
   mov     rbp, rsp
   mov     QWORD PTR [rbp-24], rdi
@@ -100,7 +100,7 @@ void swap(int& a, int& b) {
   nop
   pop     rbp
   ret
-```
+</code></pre></div>
 
 This code does a lot stuff for such a simple function. It starts off with the
 address of `a` in `rdi`, which gets copied onto the stack (`mov QWORD PTR
@@ -129,25 +129,23 @@ the CPU registers.
 Other ways of swapping integers include using maths and using bitwise
 operations:
 
-{% highlight cpp %}
-void swap_tmp(int& a, int& b) {
-	int tmp = a;
-	a = b;
-	b = tmp;
-}
-void swap_add(int& a, int& b) {
-	a += b;
-	b = a - b;
-	a -= b;
-}
-void swap_xor(int& a, int& b) {
-	a ^= b;
-	b ^= a;
-	a ^= b;
-}
-{% endhighlight %}
-
-```
+<div class="container row">
+<figure class="col-sm-12 col-md-6 highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="kt">void</span> <span class="nf">swap_tmp</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+	<span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+	<span class="n">b</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">swap_add</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">a</span> <span class="o">+=</span> <span class="n">b</span><span class="p">;</span>
+	<span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">;</span>
+	<span class="n">a</span> <span class="o">-=</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">swap_xor</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">a</span> <span class="o">^=</span> <span class="n">b</span><span class="p">;</span>
+	<span class="n">b</span> <span class="o">^=</span> <span class="n">a</span><span class="p">;</span>
+	<span class="n">a</span> <span class="o">^=</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+<div class="col-sm-12 col-md-6 highlighter-rouge"><pre class="highlight"><code>
 swap_tmp(int&, int&):
         mov     eax, DWORD PTR [rdi]
         mov     edx, DWORD PTR [rsi]
@@ -170,7 +168,8 @@ swap_xor(int&, int&):
         mov     DWORD PTR [rsi], eax
         xor     DWORD PTR [rdi], eax
         ret
-```
+</code></pre></div>
+</div>
 
 These other options do not use the temporary variable, so on the face of it look
 to be more efficient with memory, in stead using more complicated operations.
@@ -223,7 +222,8 @@ the compiler into optimising the swap function, but not optimising so well that
 it realises we're not really doing anything in the function. We use the for-loop
 and return statement to help trick the compiler, and we get the following:
 
-```
+<div class="container row">
+<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>
 main:
         test    edi, edi
         jle     .L7
@@ -246,9 +246,8 @@ main:
         mov     ecx, 1
         mov     eax, 0
         jmp     .L5
-```
-
-```
+</code></pre></div>
+<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>
 main:
         test    edi, edi
         jle     .L7
@@ -271,9 +270,8 @@ main:
         mov     ecx, 1
         xor     eax, eax
         jmp     .L5
-```
-
-```
+</code></pre></div>
+<div class="col-sm-12 col-md-4 highlighter-rouge"><pre class="highlight"><code>
 main:
         xor     eax, eax
         test    edi, edi
@@ -288,7 +286,8 @@ main:
 .L5:
         sub     eax, ecx
         ret
-```
+</code></pre></div>
+</div>
 
 It turns out the compiler generates the same code for both `swap_tmp` and for
 `swap_add` where the main swapping loop occurs between the labels `.L8` and
