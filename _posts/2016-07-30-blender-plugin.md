@@ -9,7 +9,9 @@ After a trip to the US, I set about creating a video of the clips and photos fro
 After a little while playing aroud with it, the one thing that really annoyed me about blender's VSE was how it imported images. Unless the image you import is exactly the same size as the render target Blender will squash it and mangle it to that size. In the video I was looking to import a large portrait photo and pan from the bottom to the top, so I needed the image in its original aspect ratio and ideally at its full resolution. Initially I manually added transfrom layers to rescale the image back to its proper aspect ration, but quickly got bored of doing this and wrote an add-on to do it for me.
 
 The finished video:
+<div class="video-container-16-9">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/df1EAIxAFVc" frameborder="0" allowfullscreen></iframe>
+</div>
 <!--end-excerpt-->
 
 The add-on requires very few dependencies as I had no idea what might be available to a default install of blender. In fact `struct`, `imghdr` and `re` are only used by the `get_image_size` function, which could easily be replaced by `PIL` or similar if available.
