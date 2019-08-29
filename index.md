@@ -2,46 +2,25 @@
 layout: main
 title: John Lawson
 ---
-
-Mathematician pretending to be a software engineer.
-
-Working on accelerating machine learning on a range of hardware using the SYCL
-application model, primarily through actively contributing to the SYCL backend
-of Tensorflow and Eigen.
-
-<div class="alert alert-info" role="alert">
-<strong>Heads up:</strong> This site hasn't been updated much recently, so may
-contain information which is a little dated and inaccurate. I have finished my
-Phd, am no longer working in academia or teaching, and should hopefully have
-this updated sometime.
-</div>
-
 {% include base.html %}
-<div class="row triple-col">
-<div class="col-sm-4">
-  <a class="thumbnail" href="{{ base }}/maths">
-  <i class="fa fa-flask fa-4x"></i>
-  <h3>Research</h3>
-  <p>Discover recent research.</p>
-  </a>
-</div>
-<div class="col-sm-4">
-  <a class="thumbnail" href="{{ base }}/teaching">
-  <i class="fa fa-university fa-4x"></i>
-  <h3>Teaching</h3>
-  <p>Resources related to tutorials.</p>
-  </a>
-</div>
-<div class="col-sm-4">
-  <a class="thumbnail" href="{{ base }}/programming">
-  <i class="fa fa-code fa-4x"></i>
-  <h3>Programs</h3>
-  <p>Recent programming projects.</p>
-  </a>
-</div>
-</div>
+
+Working on accelerating machine learning on a range of hardware using the [SYCL]
+parallel programming model. Designed and led development of [SYCL-DNN], worked on
+the SYCL backend for TensorFlow and Eigen, now leading a squad to build new
+features across the [SYCL Ecosystem].
+
+### PhD Research
+
+Completed my PhD at Durham in 2017, looking at combinatorial and geometric
+properties of cluster algebras, supervised by [Pavel Tumarkin].  More
+information is available [on my archived research pages][maths page]. The full
+PhD thesis is available on [Durham e-Theses][thesis].
 
 ### Side projects and interesting things
+
+The [programming page] gives an overview of some of the things I have worked
+on, and many of these projects are available on [GitHub].
+
 <ul id="side-projects" class="list-unstyled">
   {% for post in site.categories.interest %}
   {% unless post.sub %}
@@ -52,3 +31,15 @@ this updated sometime.
   {% endunless %}
   {% endfor %}
 </ul>
+
+[SYCL]: https://www.khronos.org/sycl/
+[SYCL-DNN]: https://github.com/codeplaysoftware/SYCL-DNN
+[SYCL-BLAS]: https://github.com/codeplaysoftware/SYCL-BLAS
+[SYCL Ecosystem]: https://developer.codeplay.com/home/
+
+[maths page]: {{ base }}/maths
+[thesis]: http://etheses.dur.ac.uk/12095/
+[Pavel Tumarkin]: http://www.maths.dur.ac.uk/users/pavel.tumarkin/
+
+[GitHub]: https://github.com/jwlawson
+[programming page]: {{ base }}/programming
