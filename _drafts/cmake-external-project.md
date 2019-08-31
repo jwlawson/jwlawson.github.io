@@ -41,8 +41,10 @@ simple as specifying the OpenCL target as a link library:
 ```cmake
 find_package(OpenCL REQUIRED)
 add_executable(my_executable ...)
-target_link_libraries(my_executable OpenCL::OpenCL)
+target_link_libraries(my_executable PUBLIC OpenCL::OpenCL)
 ```
+
+The [clinfo-lite] projects gives a full example of how this works.
 
 If cmake can find OpenCL in a system directory, then the executable target will
 be built with the OpenCL include directory correctly passed to the compiler and
@@ -59,11 +61,100 @@ cmake -DOpenCL_INCLUDE_DIR=<path/to/headers> \
 
 ### Writing find modules
 
+There are many libraries with find modules included with cmake, but what if you
+need a dependency that is not? You will need to provide a find module of your
+own. The [cmake manual][cmake-find-modules] provides some assistance to help
+with this.
+
+When you call `find_package(...)` cmake will look for a find module
+corresponding to the requested dependency. The find module has to have a name
+matching `Find<lib>.cmake`, where `<lib>` is the library name that will be used
+when calling `find_package` (e.g. `find_package(GTest)` looks for
+`FindGTest.cmake`). These find modules need to be available in the
+`CMAKE_MODULE_PATH`, so you might need to add the directory containing the
+modules to this list in your CMakeLists.txt.
+
+```cmake
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+```
+
+A typical find module will contain a call to [`find_path`][find_path] which
+looks for the libraries header files, and a call to
+[`find_library`][find_library] which looks for the library itself.  Keeping with
+the example of OpenCL, if we were to implement our own find module it would need
+to include the following:
+
+```cmake
+find_library(OpenCL_LIBRARY
+  NAMES OpenCL
+)
+find_path(OpenCL_INCLUDE_DIR
+  NAMES CL/cl.h
+)
+```
+
+The `OpenCL_LIBRARY` and `OpenCL_INCLUDE_DIR` variables are the same as those
+used above for a user to specify the location of the OpenCL library.  If these
+variables are not defined, then cmake will look for the OpenCL library and
+headers. If these variables are already defined when `find_*` is called then
+cmake assumes that the path in the variable is correct and will not search
+further.
+
+However if cmake fails to find the library or headers, then the variables are
+left undefined. Most find modules make use of the
+`FindPackageHandleStandardArgs` module to consistently handle cases like this.
+To do this, the find module should include something like:
+
+```cmake
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(OpenCL
+  FOUND_VAR OpenCL_FOUND
+  REQUIRED_VARS OpenCL_LIBRARY OpenCL_INCLUDE_DIR
+)
+```
+
+This tells cmake which variables have to be defined in order for the dependency
+to be met and sets `OpenCL_FOUND` to `true` if it is available or `false` if
+not. If a user calls `find_package(OpenCL REQUIRED)` and cmake cannot find the
+library or headers then the `find_package_handle_standard_args` function call
+will output an error.
+
+Now that we know whether or not the dependency has been found and we know the
+paths to the headers and the library this information needs to made available to
+users. This is best done by creating a new target that incorporates these
+imported paths:
+
+```cmake
+if(OpenCL_FOUND AND NOT TARGET OpenCL::OpenCL)
+  add_library(OpenCL::OpenCL UNKNOWN IMPORTED)
+  set_target_properties(OpenCL::OpenCL PROPERTIES
+    IMPORTED_LOCATION "${OpenCL_LIBRARY}"
+    INTERFACE_INCLUDE_DIRECTORIES "${OpenCL_INCLUDE_DIR}"
+  )
+endif()
+```
+
+This imported target can be treated in just the same way as the `OpenCL::OpenCL`
+target provided by cmake's built in FindOpenCL module. In fact you can look at
+the [FindOpenCL source code] to see that under the hood this is all that cmake
+is doing (albeit with more platform specific workarounds).
+
+Another full example is included in [SYCL-DNN], which uses Google benchmark as
+its benchmarking framework. It's [find module][findbenchmark] is very straight
+forward and closely follows the above.
+
 
 ### Using ExternalProject
 
-The easiest way to use `ExternalProject` is to call `ExternalProject_Add` with
-the URL of the project you want to build in your CMakeLists.txt file.
+Find modules are really good for finding dependencies already installed on a
+system, but often a project has external dependencies that are unlikely to be
+installed and a user may not actually want to or be able to install them. In
+cases like this we can instruct cmake to download its own copy of the
+dependencies and use that instead.
+
+The easiest way to do this is to use the [ExternalProject] cmake module. This
+contains the `ExternalProject_Add` function which will create a new target to
+fetch and build an external dependency:
 
 ```cmake
 ExternalProject_Add(project_name
@@ -72,7 +163,7 @@ ExternalProject_Add(project_name
 )
 ```
 
-Then when you run cmake a target called `project_name` will be created which
+When you run cmake a target called `project_name` will be created which
 will download, build and install the project. If the project uses cmake itself,
 then the project's cmake files will be used to build the project.
 If the external project does not use cmake, then you will have to add the
@@ -86,18 +177,77 @@ permissions to default install locations (e.g. `/usr/local/lib` on linux) and
 will affect system state.
 
 It is better not to directly install dependencies but still provide them to
-build steps that rely on them. This can be done by using `ExternalProject` to
-generate cmake targets that can be added as dependencies to other targets.
+build steps that rely on them. To do this you can specify `INSTALL_COMMAND ""`
+to prevent cmake trying to install the library, and then create an imported
+target using the built library and downloaded headers.
 
-### Combining ExternalProject with find modules
+Continuing with the OpenCL example, the Khronos group provides an open source
+OpenCL ICD loader library, as well as OpenCL headers. These can be used together
+to provide the OpenCL dependency:
 
-### Importing targets
+```cmake
+include(ExternalProject)
+ExternalProject_Add(opencl_headers
+  GIT_REPOSITORY    https://github.com/KhronosGroup/OpenCL-Headers
+  GIT_TAG           master
+  CONFIGURE_COMMAND ""
+  BUILD_COMMAND     ""
+  INSTALL_COMMAND   ""
+)
+ExternalProject_Get_Property(opencl_headers SOURCE_DIR)
+file(MAKE_DIRECTORY ${SOURCE_DIR})
+set(OpenCL_INCLUDE_DIR ${SOURCE_DIR} CACHE PATH "OpenCL header directory")
 
-The [googletest] project suggests invoking `cmake --build` within cmake (as
-shown in their [documentation][gtest-docs]), so that the `ExternalProject` is
-downloaded while cmake is running. This allows the developer to directly use the
-googletest cmake configuration using `add_subdirectory(...)`.
+ExternalProject_Add(opencl_icd_loader
+  GIT_REPOSITORY  https://github.com/KhronosGroup/OpenCL-ICD-Loader
+  GIT_TAG         master
+  DEPENDS         opencl_headers
+  CMAKE_ARGS      -DOPENCL_ICD_LOADER_HEADERS_DIR=${OpenCL_INCLUDE_DIR}
+  INSTALL_COMMAND ""
+)
+ExternalProject_Get_Property(opencl_icd_loader BINARY_DIR)
+set(OpenCL_LIBRARY ${BINARY_DIR}/libOpenCL.so CACHE PATH "OpenCL library location")
+```
 
+External project will download and build the headers and library, but we cannot
+link them to other cmake targets as we have not created a cmake target that
+contains the OpenCL dependency. We could explicitly add calls to `add_library`
+etc here, but note that this would be identical to the target creation in the
+find module. Rather than repeating ourselves we can simply set the `OpenCL_*`
+cache variables to point to the build artifacts and call `find_package(OpenCL)`
+to generate the `OpenCL::OpenCL` target as before.
+
+This new target will not know that it relies on the external projects being
+built, so one last thing to do is add dependencies to ensure that everything is
+built in the correct order:
+
+```cmake
+add_dependencies(OpenCL::OpenCL opencl_headers opencl_icd_loader)
+```
+
+### Putting it all together
+
+Combining ExternalProject and find modules provides a powerful way to ensure
+that external dependencies can be found for cmake projects. But a user might not
+want to always download and build libraries that are available on their systems.
+It might be better to try and find the library locally, falling back to the
+option of downloading it if not found. This can easily be done with a simple
+cmake script:
+
+```cmake
+find_package(OpenCL QUIET)
+
+if(NOT OpenCL_FOUND)
+  # Use ExternalProject as above
+  find_package(OpenCL REQUIRED)
+endif()
+```
+
+If OpenCL is found on the system, then the first call to `find_package` will
+find it and will set `OpenCL_FOUND` to `TRUE`. If it is not available on the
+system then we go through the ExternalProject setup as above to download and
+build OpenCL before calling `find_package` again with the paths set to the build
+directory.
 
 
 [conan]: https://conan.io/
@@ -107,5 +257,13 @@ googletest cmake configuration using `add_subdirectory(...)`.
 [find_package]: https://cmake.org/cmake/help/latest/command/find_package.html
 [inbuilt-find]: https://cmake.org/cmake/help/latest/manual/cmake-modules.7.htm#find-modules
 [FindOpenCL]: https://cmake.org/cmake/help/latest/module/FindOpenCL.html
+[clinfo-lite]: https://github.com/jwlawson/clinfo-lite
+[cmake-find-modules]: https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#find-modules
+[find_path]: https://cmake.org/cmake/help/latest/command/find_path.html
+[find_library]: https://cmake.org/cmake/help/latest/command/find_library.html
+[FindOpenCL source code]: https://github.com/Kitware/CMake/blob/master/Modules/FindOpenCL.cmake
+[SYCL-DNN]: https://github.com/codeplaysoftware/SYCL-DNN
+[findbenchmark]: https://github.com/codeplaysoftware/SYCL-DNN/blob/master/cmake/Modules/Findbenchmark.cmake
+
 [googletest]: https://github.com/google/googletest
 [gtest-docs]: https://github.com/google/googletest/blob/master/googletest/README.md#incorporating-into-an-existing-cmake-project
