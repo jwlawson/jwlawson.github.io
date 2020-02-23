@@ -4,13 +4,13 @@ category: interest
 title: Dependencies in cmake
 ---
 
-Many C++ projects have external dependencies, but there is no easy way to ensure
-that the required dependencies are available at build time. There has been a lot
-of work on package managers such as [conan] and [vcpkg], while other projects
-use git submodules or just throw an error if dependencies cannot be found.  Many
-projects already use the build system generator [cmake], so its built in
-functionality can help without requiring developers to add support for a whole
-package management system.
+Many C++ projects have external dependencies, but there is no easy way to
+ensure that the required dependencies are available at build time. There has
+been a lot of work on package managers such as [conan] and [vcpkg], while other
+projects use git submodules or just throw an error if dependencies cannot be
+found. Many projects already use the build system generator [cmake], which
+provides built in functionality to help solve this problem without requiring
+developers to add support for a package management system.
 
 The primary way to find and control dependencies in cmake is through
 `find_package`, which looks for files matching a dependency and typically
@@ -43,8 +43,6 @@ find_package(OpenCL REQUIRED)
 add_executable(my_executable ...)
 target_link_libraries(my_executable PUBLIC OpenCL::OpenCL)
 ```
-
-The [clinfo-lite] projects gives a full example of how this works.
 
 If cmake can find OpenCL in a system directory, then the executable target will
 be built with the OpenCL include directory correctly passed to the compiler and
@@ -140,7 +138,7 @@ the [FindOpenCL source code] to see that under the hood this is all that cmake
 is doing (albeit with more platform specific workarounds).
 
 Another full example is included in [SYCL-DNN], which uses Google benchmark as
-its benchmarking framework. It's [find module][findbenchmark] is very straight
+its benchmarking framework. Its [find module][findbenchmark] is very straight
 forward and closely follows the above.
 
 
@@ -196,7 +194,9 @@ ExternalProject_Add(opencl_headers
 )
 ExternalProject_Get_Property(opencl_headers SOURCE_DIR)
 file(MAKE_DIRECTORY ${SOURCE_DIR})
-set(OpenCL_INCLUDE_DIR ${SOURCE_DIR} CACHE PATH "OpenCL header directory")
+set(OpenCL_INCLUDE_DIR ${SOURCE_DIR}
+  CACHE PATH "OpenCL header directory" FORCE
+)
 
 ExternalProject_Add(opencl_icd_loader
   GIT_REPOSITORY  https://github.com/KhronosGroup/OpenCL-ICD-Loader
@@ -206,7 +206,9 @@ ExternalProject_Add(opencl_icd_loader
   INSTALL_COMMAND ""
 )
 ExternalProject_Get_Property(opencl_icd_loader BINARY_DIR)
-set(OpenCL_LIBRARY ${BINARY_DIR}/libOpenCL.so CACHE PATH "OpenCL library location")
+set(OpenCL_LIBRARY ${BINARY_DIR}/libOpenCL.so
+  CACHE PATH "OpenCL library location" FORCE
+)
 ```
 
 External project will download and build the headers and library, but we cannot
@@ -225,6 +227,33 @@ built in the correct order:
 add_dependencies(OpenCL::OpenCL opencl_headers opencl_icd_loader)
 ```
 
+### Playing nice with package managers
+
+Even if you don't want to provide support for a package manager, your users
+might. Equally they might like to use your project as a dependency
+within their own project using a package manager. As a result it is good
+practise to keep this use-case in mind when developing your build
+scripts.
+
+Package managers will want to manage all dependencies for projects they are
+trying to build, which can clash with the above use of ExternalProject, causing
+problems such as the same dependency being provided and built multiple times,
+version clashes and linking errors.  To avoid these problems and coexist with
+package managers all calls to ExternalProject as above should be wrapped in an
+option that allows a user to disable downloading and building any external
+dependencies.
+
+```cmake
+option(DOWNLOAD_DEPENDENCIES
+  "Whether to download any dependencies not found on the system"
+  ON
+)
+```
+
+This allows users of package managers to disable this functionality as the
+dependencies will all be provided by their package manager.
+
+
 ### Putting it all together
 
 Combining ExternalProject and find modules provides a powerful way to ensure
@@ -237,9 +266,16 @@ cmake script:
 ```cmake
 find_package(OpenCL QUIET)
 
-if(NOT OpenCL_FOUND)
+if(NOT OpenCL_FOUND AND DOWNLOAD_DEPENDENCIES)
   # Use ExternalProject as above
+  include(ExternalProject)
+  ExternalProject_Add(opencl_headers
+    ...
+  )
+  ...
+  # Create library target using newly set up dependency
   find_package(OpenCL REQUIRED)
+  add_dependencies(OpenCL::OpenCL opencl_headers opencl_icd_loader)
 endif()
 ```
 
@@ -249,13 +285,15 @@ system then we go through the ExternalProject setup as above to download and
 build OpenCL before calling `find_package` again with the paths set to the build
 directory.
 
+The [clinfo-lite] projects gives a full example of how this all works.
+
 
 [conan]: https://conan.io/
 [vcpkg]: https://github.com/microsoft/vcpkg
 [cmake]: https://cmake.org
 [ExternalProject]: https://cmake.org/cmake/help/latest/module/ExternalProject.html
 [find_package]: https://cmake.org/cmake/help/latest/command/find_package.html
-[inbuilt-find]: https://cmake.org/cmake/help/latest/manual/cmake-modules.7.htm#find-modules
+[inbuilt-find]: https://cmake.org/cmake/help/latest/manual/cmake-modules.7.html#find-modules
 [FindOpenCL]: https://cmake.org/cmake/help/latest/module/FindOpenCL.html
 [clinfo-lite]: https://github.com/jwlawson/clinfo-lite
 [cmake-find-modules]: https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html#find-modules
